@@ -1,0 +1,2487 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+SocCam_Mantenimiento
+</name>
+</assembly>
+<members>
+<member name="T:SocCam_Mantenimiento.My.Resources.Resources">
+<summary>
+  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
+</summary>
+</member>
+<member name="P:SocCam_Mantenimiento.My.Resources.Resources.ResourceManager">
+<summary>
+  Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+</summary>
+</member>
+<member name="P:SocCam_Mantenimiento.My.Resources.Resources.Culture">
+<summary>
+  Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+  búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
+</summary>
+</member>
+<member name="M:SocCam_Mantenimiento.AfipAuth.LoadActive(System.String,System.Int64)">
+ <summary>
+ Carga sesion activa
+ </summary>
+ <param name="ServicioAuth">Nombre del servicio que corresponde la autorizacion</param>
+ <param name="activeTime">Ticks de la hora que se quiere obtener la sesion</param>
+ <returns>True si se encontro una sesion, false si no</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.AfipFactura.GetUltimoNumero(SocCam_Mantenimiento.AfipAuth,System.Int64,System.Int32,SocCam_Mantenimiento.AfipFactura.Tipo,System.Boolean)">
+ <summary>
+ Devuelve el ultimo numero de comprobante
+ </summary>
+ <param name="auth">Autorizacion al servicio</param>
+ <param name="cuit">Cuit del emisor</param>
+ <param name="puntoVenta">Punto de venta del emisor</param>
+ <param name="comprobanteTipo">Tipo de comprobante: factura, recibo, etc</param>
+ <returns></returns>
+</member>
+<member name="M:SocCam_Mantenimiento.AfipFactura.TieneDetalleCodigo(System.String)">
+ <summary>
+ Chequear que la factura contiene un item con detalle buscado
+ </summary>
+ <param name="codigoDetalle">El codigo de detalle a buscar</param>
+ <returns></returns>
+</member>
+<member name="F:SocCam_Mantenimiento.AfipQREncoder.VER">
+ <summary>
+ OBLIGATORIO – versión del formato de los datos del comprobante
+ </summary>
+</member>
+<member name="F:SocCam_Mantenimiento.AfipQREncoder.TIPO_CAEA">
+ <summary>
+ Tipo de código de autorización CAEA 
+ </summary>
+</member>
+<member name="F:SocCam_Mantenimiento.AfipQREncoder.TIPO_CAE">
+ <summary>
+ Tipo de código de autorización CAE
+ </summary>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.Fecha">
+ <summary>
+ OBLIGATORIO – Fecha de emisión del comprobante
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.Cuit">
+ <summary>
+ OBLIGATORIO – Cuit del Emisor del comprobante
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.PtoVta">
+ <summary>
+ OBLIGATORIO – Punto de venta utilizado para emitir el comprobante
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.TipoCmp">
+ <summary>
+ OBLIGATORIO – tipo de comprobante
+ </summary>
+ <see cref="!:https://www.afip.gob.ar/fe/ayuda/tablas.asp"/>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.NroCmp">
+ <summary>
+ OBLIGATORIO – Número del comprobante
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.Importe">
+ <summary>
+ OBLIGATORIO – Importe Total del comprobante (en la moneda en la que fue emitido)
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.Moneda">
+ <summary>
+ OBLIGATORIO – Moneda del comprobante
+ </summary>
+ <see cref="!:https://www.afip.gob.ar/fe/ayuda/tablas.asp"/>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.Ctz">
+ <summary>
+ OBLIGATORIO – Cotización en pesos argentinos de la moneda utilizada (1 cuando la moneda sea pesos)
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.TipoDocRec">
+ <summary>
+ DE CORRESPONDER – Código del Tipo de documento del receptor
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.NroDocRec">
+ <summary>
+ DE CORRESPONDER – Número de documento del receptor correspondiente al tipo de documento indicado
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.TipoCodAut">
+ <summary>
+ OBLIGATORIO – “A” para comprobante autorizado por CAEA, “E” para comprobante autorizado por CAE
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.AfipQREncoder.CodAut">
+ <summary>
+ OBLIGATORIO – Código de autorización otorgado por AFIP para el comprobante
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:SocCam_Mantenimiento.AfipQREncoder.GenerarJSON">
+ <summary>
+ Genera un JSON con los datos del objeto
+ </summary>
+ <returns>Cadena vacía si falló. JSON si lo procesó correctamente</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.AfipQREncoder.GenerarURLEncoded">
+ <summary>
+ Devuelve la URL con el JSON codificado en Base64
+ </summary>
+ <returns>Cadena vacia si falló, la URL si se completó correctamente</returns>
+</member>
+<member name="P:SocCam_Mantenimiento.GlobalConfig.FeTipoLogo">
+ <summary>
+ 0: nombre fantasia, 1:logo cargado, 2:nada
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Campania.LoadCombo(System.Windows.Forms.ComboBox@,System.Boolean)">
+ <summary>
+ Carga un listado de campanias en un combobox. El tag es una lista de campañas. 
+ El primer elemento siempre es NINGUNA y el ID del primer objeto es 0
+ </summary>
+ <param name="cmb">El combo a cargar el listado</param>
+ <returns>-1 si falló, un entero con la cantidad de items cargados</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Campania.CargarListaDeCuotas(System.Int32)">
+ <summary>
+ Genera la lista de cuotas bonificadas segun la campaña
+ </summary>
+ <param name="socioID">El ID de socio a generar la campaña</param>
+ <returns>El importe total de todas las cuotas, un entero negativo si falló</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.pagosCofre.ActualizarBloqueos(System.String)">
+ <summary>
+ Actualiza la base de datos de ProNET en funcion si tienen deudas o no.
+ </summary>
+ <param name="pronetPath"></param>
+ <returns></returns>
+</member>
+<member name="M:SocCam_Mantenimiento.DetalleCCSocio.CuotaSocialExiste(System.Int32)">
+ <summary>
+ Busca en el diccionario de cuotas si existe el periodo
+ </summary>
+ <param name="periodo">Periodo en formato 202000 (Enero 2020)</param>
+ <returns>True si se encuentra, False si no</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Executor.EnviarFacturaMailAuto(System.Int32,System.Int32,System.Int32,SocCam_Mantenimiento.GlobalConfig,System.Boolean,System.String)">
+ <summary>
+ Envia en automatico las facturas
+ </summary>
+ <param name="origen">Origen del evento
+ 0: Todos
+ 1: Cuota social
+ 2: Pago Contratos
+ 3: FE manual
+ </param>
+ <param name="origenID">Origen </param>
+ <returns>
+ 0: si termino correctamente
+ 1: No tiene destinatario
+ </returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Executor.GetListaEmails(System.String,System.Int32)">
+ <summary>
+ Buscar los correos correspondientes a un DNI o CUIT
+ </summary>
+ <param name="documento">Numero de DNI o CUIT</param>
+ <param name="buscarBancoDatos">El banco de datos que usar
+ 0: Todos
+ 1: Cuota social
+ 2: Contratos
+ 3: Agenda
+ </param>
+ <returns></returns>
+</member>
+<member name="M:SocCam_Mantenimiento.HelperMod.DebugList(System.Int32,System.Int32,System.Object,System.String)">
+ <summary>
+ Rutina que ayuda a ver que valor se va a cargar en el subitem de un ListItem
+ </summary>
+ <param name="lstIndex">subitem index</param>
+ <param name="tableIndex">index del campo de la consulta a la db</param>
+ <param name="value">valor devuelto en la columna tableIndex</param>
+ <param name="fieldName">Cadena con el nombre de la columna</param>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.HelperMod.ByteToImage(System.Drawing.Image@,System.Byte[])">
+ <summary>
+ Convierte un array de Bytes en una imagen
+ </summary>
+ <param name="avatar">Imagen donde se va a dibujar el array de Bytes</param>
+ <param name="dbImage">Array de Bytes con la informacion de una imagen</param>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.HelperMod.ImageToByte(System.Drawing.Image)">
+ <summary>
+ Convierte la imagen de un PictureBox a un array de Bytes
+ </summary>
+ <param name="avatar">Imagen a ser convertida</param>
+ <returns>Un array de Bytes con los datos de una imagen</returns>
+ <remarks>Si el PictureBox tiene recuadro, este es copiado. Lo ideal es llamar
+  a la funcion con el borde deshabilitado</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.HelperMod.GetNombreMes(System.Byte)">
+ <summary>
+ Retorna el nombre del mes según el byte ingresado
+ </summary>
+ <param name="mes">valor en base 0 con el mes a retornar el nombre</param>
+ <returns>El nombre del mes solicitado</returns>
+ <remarks>Mes es en base 0, si está fuera de rango devuelve enero</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.HelperMod.GetPeriodoFromFecha(System.DateTime,System.Byte)">
+ <summary>
+ Muestra el periodo en base 0 segun la fecha del año y la periodicidad
+ </summary>
+ <param name="fecha">Fecha a verificar el periodo</param>
+ <param name="mesesPorPeriodo">Cantidad de meses que tiene el periodo</param>
+ <returns>El periodo que esta incluida la fecha, si la fecha es 1/4/2016 y el periodo es semestral retorna 0</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.HelperMod.FlagsToInt(System.Collections.Generic.List{System.Boolean})">
+ <summary>
+ Convierte una lista de booleanos en un entero
+ </summary>
+ <param name="lstFlags"></param>
+ <returns></returns>
+</member>
+<member name="M:SocCam_Mantenimiento.HelperMod.IntToFlags(System.Int32)">
+ <summary>
+ Convierte un entero en una lista de booleanos
+ </summary>
+ <param name="flags"></param>
+ <returns></returns>
+</member>
+<member name="T:SocCam_Mantenimiento.Log">
+ <summary>
+ Controlador de errores y logs del sistema
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.LogFilePath">
+ <summary>
+ Path donde se va encuentra o se va a crear el archivo de log
+ </summary>
+ <value>Cadena con la ruta y nombre de archivo log</value>
+ <returns>La ruta completa con nombre de archivo log</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.isHidden">
+ <summary>
+ Propiedad de visiblidad del archivo en el sistema operativo
+ </summary>
+ <value>Booleano indicando el estado. True: el archivo esta oculto, False: el archivo esta visible</value>
+ <returns>La </returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.LogLevel">
+ <summary>
+ Nivel de detalle de logueo
+ </summary>
+ <value>El nivel de logueo</value>
+ <returns>Nivel de logueo actual</returns>
+ <remarks>0: Disable, 1: estandar, 2:debug</remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.Timestamp">
+ <summary>
+ Timestamp de cuando ocurrio el problema
+ </summary>
+ <value>El tiempo y la hora del error</value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.SubSystem">
+ <summary>
+ Nombre del subsistema donde ocurrio el error
+ </summary>
+ <value>Cadena con el nombre del subsistema donde ocurrio el error</value>
+ <returns>El nombre del subsistema</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.ModuleName">
+ <summary>
+ Nombre del modulo donde ocurrio el error
+ </summary>
+ <value>Cadena con el nombre del modulo donde fallo</value>
+ <returns>El nombre del modulo donde ocurrio el fallo</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.Description">
+ <summary>
+ Descripcion del error
+ </summary>
+ <value>Cadena con la descripcion del error</value>
+ <returns>La descripcion del error</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.Code">
+ <summary>
+ Codigos de error
+ </summary>
+ <value>Entero con codigo del error</value>
+ <returns>El codigo de error</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Log.ErrorLevel">
+ <summary>
+ Nivel de error
+ </summary>
+ <value>El nivel de error</value>
+ <returns>0: bajo, 1: medio, 2: grave, 3: catastrofico</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Log.Save">
+ <summary>
+ Guarda una entrada de error en el log
+ </summary>
+ <returns>True si se pudo crear el archivo y/o guardar la entrada, False si fallo</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Log.CreateLogFile">
+ <summary>
+ Crea un nuevo archivo de log
+ </summary>
+ <returns>True si se pudo crear, False si fallo</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Mail.Compose(System.Boolean)">
+ <summary>
+ Compone el cuerpo del mail
+ </summary>
+ <returns>El cuerpo del mensaje</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Mail.SanitizeTemplate(System.String)">
+ <summary>
+ Limpia todo rastro de las variables.
+ </summary>
+ <remarks>Limpia todas las variables que no son utilizadas o que hayan quedadas mal escritas</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Mail.ReplaceVariable(System.String,System.String,System.String)">
+ <summary>
+ Reemplaza todas las ocurrencias de la variable por el valor
+ </summary>
+ <param name="htmlCode">Codigo donde se encuentran las variables</param>
+ <param name="varName">Variable a reemplazar</param>
+ <param name="varValue">Valor de la variable</param>
+ <returns>Cadena con los valores en lugar de la variable</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Module1.Execute(SocCam_Mantenimiento.ArgsParser)">
+ <summary>
+ Ejecuta la tarea
+ </summary>
+ <param name="argParse">Listado de parametros a ejecutar</param>
+ <returns>Codigo de salida del programa</returns>
+</member>
+<member name="P:SocCam_Mantenimiento.MovimientoCuentaCorrienteSocio.ComprobanteRelacionado">
+ <summary>
+ El id del comprobante de la operación
+ </summary>
+ <returns>El id del recibo / factura si es debe, el ID de operación si es pago</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.MovimientoCuentaCorrienteSocio.CargarMovimientosImpagosSocios(System.Int32)">
+ <summary>
+ Carga los movimientos impagos por socio
+ </summary>
+ <param name="idSocio">ID del socio a buscar</param>
+ <returns>El numero de movimientos recolectados, entero negativo si fallo</returns>
+</member>
+<member name="F:SocCam_Mantenimiento.Cobrador._dictCobradorCuotaCombo">
+ <summary>
+ Diccionario con informacion para buscar el nombre del cobrador en el combo cmbCobrador del formulario Cuota
+ </summary>
+ <remarks>Consta del key "nombre apellio" y el valor es el item index en el combo</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Cobrador.Delete(helix.SQLEngine,System.Int32)">
+ <summary>
+ Marca un cobrador como eliminado
+ </summary>
+ <param name="sqle">Motor de base de datos</param>
+ <param name="ID">El id de la base de datos del cobrador a eliminar</param>
+ <returns>TRUE si se elimino con exito, FALSE si no</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Cobrador.Reset">
+ <summary>
+ Reinicia todos los valores por defecto
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Cobrador.GetDbIDFromComboCuotaIndex(System.Int32)">
+ <summary>
+ Devuelve el db ID del cobrador seleccionado en el 
+ </summary>
+ <param name="index"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.Periodicidad">
+ <summary>
+ Periodicidad de la cuota, si es mensual, bimestral, etc
+ </summary>
+ <value>Byte indicando la periodicidad</value>
+ <returns>La periodicidad de la cuota</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.Periodo">
+ <summary>
+ Periodo al que corresponde la cuota
+ </summary>
+ <value>Byte indicando el periodo</value>
+ <returns>El periodo al que corresponde la cuota</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.anio">
+ <summary>
+ Año al que corresponde la cuota
+ </summary>
+ <value>Entero con indicando el año</value>
+ <returns>El año al que corresponde</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.estado">
+ <summary>
+ Estado en el que se encuentra la cuota
+ </summary>
+ <value>Uno de los 3 estados que puede tener la cuota, al dia, pendiente o moroso</value>
+ <returns>El estado de la cuota</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.cobradorID">
+ <summary>
+ Db ID del cobrador que cobra/genera la cuota
+ </summary>
+ <value>Entero con el Db ID del cobrador</value>
+ <returns>Entero con el Db ID</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.observaciones">
+ <summary>
+ Informacion adicional que se le agrega a la cuota
+ </summary>
+ <value>Cadena con comentario</value>
+ <returns></returns>
+ <remarks>El comentario</remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.deleted">
+ <summary>
+ Flag indicando si la cuota fue eliminada
+ </summary>
+ <value>TRUE si esta borrada, FALSE si no</value>
+ <returns>El estado de la cuota</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.monto">
+ <summary>
+ Monto de la cuota
+ </summary>
+ <value>Decimal con el valor de la cuota por periodo</value>
+ <returns>El valor de la cuota</returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.Campania">
+ <summary>
+ ID de la campaña a la que pertenece la cuota
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.MovimientoCC">
+ <summary>
+ ID del movimiento de CC
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.sqle">
+ <summary>
+ El motor de base datos
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.CuotaSocio.fechaVencimiento">
+ <summary>
+ Fecha en que la cuota pasa de estado pendiente a vencida
+ </summary>
+ <value>Fecha de vencimiento de la cuota</value>
+ <returns>La fecha de vencimiento</returns>
+ <remarks></remarks>
+</member>
+<member name="T:SocCam_Mantenimiento.CuotaSocio.ESTADO_SOCIO">
+ <summary>
+ Tipos de estados que se puede encontrar socio/cuota
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.Save(helix.SQLEngine,System.Byte)">
+ <summary>
+ Guarda la cuota en la base de datos
+ </summary>
+ <param name="sqle">Motor de base de datos</param>
+ <param name="editMode">Modo de guardado, nuevo o edicion</param>
+ <returns>El ultimo</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.GetCuotasByUser(helix.SQLEngine@,System.Int32)">
+ <summary>
+ Busca todas las cuotas de un usuario
+ </summary>
+ <param name="sqle">El motor de base datos</param>
+ <param name="userID">El ID del usuario que se quiere recuperar las cuotas</param>
+ <returns>True si la busqueda fue exitosa, FALSE si fallo</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.GenerateVencimiento(System.Byte,System.Int32,System.Byte)">
+ <summary>
+ Genera la fecha de vencimiento de un cuota
+ </summary>
+ <param name="periodo">Periodo al que pertenece la cuota</param>
+ <param name="anio">Año al que pertenece la cuota</param>
+ <param name="periodicidad">Periodicidad de cobro de la cuota</param>
+ <returns>La fecha de cuando se va a vencer la cuota</returns>
+ <remarks>Para no tener problema con la fecha, arrancamos el primero de año y se suma los meses para estar al 1º del proximo periodo
+ y luego se retrocede 1 dia para estar en el ultimo dia del periodo correspondiente</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.Delete(helix.SQLEngine,System.Int32)">
+ <summary>
+ Elimina una cuota seleccionada
+ </summary>
+ <param name="sqle"></param>
+ <param name="cuotaID"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.DeterminePeriodFromDate(System.DateTime,System.Byte)">
+ <summary>
+ Determina el periodo que corresponde a una cuota segun fecha y periodicidad
+ </summary>
+ <param name="fromDate">Fecha a determinar el periodo</param>
+ <param name="periodicidad">Periodicidad de la cuota</param>
+ <returns>El periodo al que corresponde la cuota</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.CuotaExist(helix.SQLEngine,System.Byte,System.Byte,System.Int32,System.Int32,System.Int32@)">
+ <summary>
+ Verifica que la cuota no haya sido creada con anterioridad
+ </summary>
+ <param name="sqle">El motor de base de datos</param>
+ <param name="periodo">Periodo de la cuota a verificar</param>
+ <param name="periodicidad">Periodicidad de la cuota a verificar</param>
+ <param name="anio">Anio de la cuota a verificar</param>
+ <param name="socioID">ID de la cuota del socio a verificar</param>
+ <returns>TRUE si ya existe una cuota igual, FALSE si no</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.PeriodoContieneMes(System.Int32,System.Int32,System.Int32)">
+ <summary>
+ Indica si el mes esta dentro de un periodo dado
+ </summary>
+ <param name="periodicity">Periodicidad de la cuota</param>
+ <param name="period">Periodo a comparar</param>
+ <param name="mes">Mes a comparar</param>
+ <returns>True si el mes esta dentro del periodo, False si no</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.LoadPeriodo(System.Int32,System.Int32,System.Decimal,System.Collections.Generic.List{SocCam_Mantenimiento.CuotaSocio}@)">
+ <summary>
+ Busca todas las cuotas de un periodo e importe especifico
+ </summary>
+ <param name="mes">Mes en base 0</param>
+ <param name="anio">Anio</param>
+ <param name="importe">Importe a buscar</param>
+ <returns>Listado de cuotas</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.CrearUltimaCuotaSinGenerar(System.Int32)">
+ <summary>
+ Carga una cuota virtual que corresponde al siguiente periodo al último generado
+ </summary>
+ <param name="idSocio">El ID del socio que corresponde la cuota</param>
+ <returns>0 si la pudo generar, menor que 0 si hubo un error</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.IrProximoPeriodo">
+ <summary>
+ Carga o crea una cuota virtual a la cuota cargada
+ </summary>
+ <returns>0 si cargó una cuota existente, 1 si creo una cuota virtual. Un entero menor que 0 si hubo un error</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.CuotaSocio.CalcularProximoPeriodo">
+ <summary>
+ Mueve el periodo o año segun periodicidad y periodo cargado
+ </summary>
+</member>
+<member name="T:SocCam_Mantenimiento.Socio">
+ <summary>
+ Clase administradora de socio
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Socio.Estado">
+ <summary>
+ Estado en que se encuentra: 0 = al dia, 1 = sin pagar el mes en curso, 2 = con deuda (30 dias o mas)
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:SocCam_Mantenimiento.Socio.Modificado">
+ <summary>
+ Fecha de ultima modificacion
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Socio.Clear">
+ <summary>
+ Reinicia los valores por defecto
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Socio.Save(helix.SQLEngine,System.Boolean)">
+ <summary>
+ Guarda la instancia actual en la base de datos
+ </summary>
+ <param name="sqlEngine">Motor de base de datos que se va a usar para guardar</param>
+ <returns>True si se guardo correctamente, False si no</returns>
+ <remarks>El motor pasa por valor para que todos los cambios que se realizen no afecte al resto del sistema</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Socio.Update(helix.SQLEngine,System.Boolean)">
+ <summary>
+ Actualiza los datos de un socio
+ </summary>
+ <param name="sqlEngine">El motor de la base de datos</param>
+ <returns>True si la operacion se realizo correctamente, False si no</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Socio.Delete(helix.SQLEngine,System.Int32,System.String,System.Boolean)">
+ <summary>
+ Elimina un socio del sistema
+ </summary>
+ <param name="sqlEngine">El motor de base de datos</param>
+ <returns>True si la operacion fue realizada con exito, False si no</returns>
+ <remarks>En realidad el registro no se borra de la base de datos, se marca como "borrada"</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Socio.DeleteAll(helix.SQLEngine,System.Boolean)">
+ <summary>
+ Elimina todos los socios de la base de datos
+ </summary>
+ <param name="sqlEngine">Motor de base de datos</param>
+ <param name="hard">True elimina a todos los socios definitivamente, False los marca como eliminados</param>
+ <returns></returns>
+</member>
+<member name="P:SocCam_Mantenimiento.SocioTipo.sqle">
+ <summary>
+ Motor de base de datos
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.SocioTipo.GetIDFromIndex(System.Int32)">
+ <summary>
+ Devuelve el id del tipo segun el indice que se elija
+ </summary>
+ <param name="index">Indice del item que se quiere recuperar </param>
+ <returns>El id del tipo de socio en la base de datos</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.SocioTipo.GetNameFromIndex(System.Byte)">
+ <summary>
+ Devuelve el nombre del tipo de socio segun el indice que se elija
+ </summary>
+ <param name="index">Indice del item que se quiere recuperar </param>
+ <returns>El nombre del tipo de socio en la base de datos</returns>
+ <remarks></remarks>
+</member>
+<member name="T:SocCam_Mantenimiento.Tablas">
+ <summary>
+ Estructuras de todas las tablas
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:SocCam_Mantenimiento.Tablas.TABLA_PAGO_SOCIOS">
+ <summary>
+ Tabla de pago de socios
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:SocCam_Mantenimiento.Tablas.TABLA_COBRADORES">
+ <summary>
+ Tabla de cobradores
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:SocCam_Mantenimiento.Tablas.TABLA_USERS">
+ <summary>
+ Tabla de usuarios del sistema
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:SocCam_Mantenimiento.Tablas.TABLA_PERMISOS">
+ <summary>
+ Tabla de permisos de usuarios del sistema
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:SocCam_Mantenimiento.Tablas.TABLA_MAIL">
+ <summary>
+ Tabla conteniendo las plantillas de mail
+ </summary>
+ <remarks>ALL se utiliza para evitar usar * al hacer las consultas y en el caso de agregar 
+ mas columnas no rompa el sistema</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.GetPrimerDiaMes(System.Int32,System.Int32)">
+ <summary>
+ Calcula el primer día del mes
+ </summary>
+ <param name="mes">Mes en base 0</param>
+ <param name="anio">Anio a calcular</param>
+ <returns></returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.GetPrimerDiaMesISO(System.Int32,System.Int32)">
+ <summary>
+ Calcula el primer día del mes
+ </summary>
+ <param name="mes">Mes en base 0</param>
+ <param name="anio">Anio a calcular</param>
+ <returns></returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.GetUltimoDiaMes(System.Int32,System.Int32)">
+ <summary>
+ Obtener el ultimo dia del mes
+ </summary>
+ <param name="mes">Mes del año en base 0</param>
+ <param name="anio">Año a obtener</param>
+ <returns>El ultimo dia del mes del año especificado</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.GetUltimoDiaMesISO(System.Int32,System.Int32)">
+ <summary>
+ Obtener el ultimo dia del mes
+ </summary>
+ <param name="mes">Mes del año en base 0</param>
+ <param name="anio">Año a obtener</param>
+ <returns>El ultimo dia del mes del año especificado</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.ByteToImage(System.Drawing.Image@,System.Byte[])">
+ <summary>
+ Convierte un array de Bytes en una imagen
+ </summary>
+ <param name="avatar">Imagen donde se va a dibujar el array de Bytes</param>
+ <param name="dbImage">Array de Bytes con la informacion de una imagen</param>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.ImageToByte(System.Drawing.Image)">
+ <summary>
+ Convierte la imagen de un PictureBox a un array de Bytes
+ </summary>
+ <param name="avatar">Imagen a ser convertida</param>
+ <returns>Un array de Bytes con los datos de una imagen</returns>
+ <remarks>Si el PictureBox tiene recuadro, este es copiado. Lo ideal es llamar
+  a la funcion con el borde deshabilitado</remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.GetPeriodoFromFecha(System.DateTime,System.Byte)">
+ <summary>
+ Muestra el periodo en base 0 segun la fecha del año y la periodicidad
+ </summary>
+ <param name="fecha">Fecha a verificar el periodo</param>
+ <param name="mesesPorPeriodo">Cantidad de meses que tiene el periodo</param>
+ <returns>El periodo que esta incluida la fecha, si la fecha es 1/4/2016 y el periodo es semestral retorna 0</returns>
+ <remarks></remarks>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.GetMesesFromPeriodicidad(System.Object)">
+ <summary>
+ Calcula la cantidad de meses que tiene un peridodo
+ </summary>
+ <param name="periodicidad">La periodicidad a calcular</param>
+ <returns>La cantidad de meses que tiene un periodo</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.Utils.CalcularProporcional(System.DateTime,System.DateTime,System.DateTime,System.Decimal)">
+ <summary>
+ Calcula el prorcional de un importe entre dos fechas, segun una fecha dentro del rango
+ </summary>
+ <param name="fechaDesde"></param>
+ <param name="fechaHasta"></param>
+ <param name="fechaCalculo"></param>
+ <param name="importe"></param>
+ <returns></returns>
+</member>
+<member name="T:SocCam_Mantenimiento.WSAA.LoginCMSService">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSAA.LoginCMSService.#ctor">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSAA.LoginCMSService.loginCmsCompleted">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSAA.LoginCMSService.loginCms(System.String)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSAA.LoginCMSService.loginCmsAsync(System.String)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSAA.LoginCMSService.loginCmsAsync(System.String,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSAA.LoginCMSService.CancelAsync(System.Object)">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSAA.loginCmsCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSAA.loginCmsCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSAA.loginCmsCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Service">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.#ctor">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECAESolicitarCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECompTotXRequestCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEDummyCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECompUltimoAutorizadoCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECompConsultarCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEARegInformativoCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASolicitarCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASinMovimientoConsultarCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASinMovimientoInformarCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEAConsultarCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetCotizacionCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposTributosCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposMonedasCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposIvaCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposOpcionalCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposConceptoCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetPtosVentaCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposCbteCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposDocCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposPaisesCompleted">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAESolicitar(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECAERequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAESolicitarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECAERequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAESolicitarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECAERequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompTotXRequest(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompTotXRequestAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompTotXRequestAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEDummy">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEDummyAsync">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEDummyAsync(System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompUltimoAutorizado(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int32)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompUltimoAutorizadoAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int32)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompUltimoAutorizadoAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int32,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompConsultar(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECompConsultaReq)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompConsultarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECompConsultaReq)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECompConsultarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECompConsultaReq,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEARegInformativo(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECAEARequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEARegInformativoAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECAEARequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEARegInformativoAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,SocCam_Mantenimiento.WSFEHOMO.FECAEARequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASolicitar(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int16)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASolicitarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int16)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASolicitarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int16,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASinMovimientoConsultar(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.String,System.Int32)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASinMovimientoConsultarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.String,System.Int32)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASinMovimientoConsultarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.String,System.Int32,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASinMovimientoInformar(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.String)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASinMovimientoInformarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.String)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEASinMovimientoInformarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.String,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEAConsultar(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int16)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEAConsultarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int16)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FECAEAConsultarAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Int32,System.Int16,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetCotizacion(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.String)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetCotizacionAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.String)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetCotizacionAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.String,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposTributos(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposTributosAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposTributosAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposMonedas(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposMonedasAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposMonedasAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposIva(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposIvaAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposIvaAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposOpcional(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposOpcionalAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposOpcionalAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposConcepto(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposConceptoAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposConceptoAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetPtosVenta(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetPtosVentaAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetPtosVentaAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposCbte(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposCbteAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposCbteAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposDoc(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposDocAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposDocAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposPaises(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposPaisesAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.FEParamGetTiposPaisesAsync(SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSFEHOMO.Service.CancelAsync(System.Object)">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest.Token">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest.Sign">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEAuthRequest.Cuit">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.PaisTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.PaisTipo.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.PaisTipo.Desc">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEPaisResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEPaisResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEPaisResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEPaisResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Err">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Err.Code">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Err.Msg">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Evt">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Evt.Code">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Evt.Msg">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.DocTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DocTipo.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DocTipo.Desc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DocTipo.FchDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DocTipo.FchHasta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.DocTipoResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DocTipoResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DocTipoResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DocTipoResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.CbteTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteTipo.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteTipo.Desc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteTipo.FchDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteTipo.FchHasta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.CbteTipoResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteTipoResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteTipoResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteTipoResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.PtoVenta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.PtoVenta.Nro">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.PtoVenta.EmisionTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.PtoVenta.Bloqueado">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.PtoVenta.FchBaja">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEPtoVentaResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEPtoVentaResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEPtoVentaResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEPtoVentaResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipo.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipo.Desc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipo.FchDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipo.FchHasta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipoResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipoResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipoResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.ConceptoTipoResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipo.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipo.Desc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipo.FchDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipo.FchHasta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipoResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipoResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipoResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.OpcionalTipoResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.IvaTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.IvaTipo.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.IvaTipo.Desc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.IvaTipo.FchDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.IvaTipo.FchHasta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.IvaTipoResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.IvaTipoResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.IvaTipoResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.IvaTipoResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Moneda">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Moneda.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Moneda.Desc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Moneda.FchDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Moneda.FchHasta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.MonedaResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.MonedaResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.MonedaResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.MonedaResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.TributoTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.TributoTipo.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.TributoTipo.Desc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.TributoTipo.FchDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.TributoTipo.FchHasta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FETributoResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FETributoResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FETributoResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FETributoResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Cotizacion">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Cotizacion.MonId">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Cotizacion.MonCotiz">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Cotizacion.FchCotiz">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECotizacionResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECotizacionResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECotizacionResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECotizacionResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMov">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMov.CAEA">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMov.FchProceso">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMov.PtoVta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovResponse.Resultado">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovConsResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovConsResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovConsResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovConsResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet.CAEA">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet.Periodo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet.Orden">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet.FchVigDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet.FchVigHasta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet.FchTopeInf">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet.FchProceso">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGet.Observaciones">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Obs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Obs.Code">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Obs.Msg">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEAGetResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGetResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGetResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAGetResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEAResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAResponse.FeCabResp">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAResponse.FeDetResp">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAResponse.Events">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAResponse.Errors">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEACabResponse">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECabResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabResponse.Cuit">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabResponse.PtoVta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabResponse.CbteTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabResponse.FchProceso">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabResponse.CantReg">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabResponse.Resultado">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabResponse.Reproceso">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAECabResponse">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEADetResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEADetResponse.CAEA">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse.Concepto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse.DocTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse.DocNro">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse.CbteDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse.CbteHasta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse.CbteFch">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse.Resultado">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetResponse.Observaciones">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEDetResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEDetResponse.CAE">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEDetResponse.CAEFchVto">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEARequest">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEARequest.FeCabReq">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEARequest.FeDetReq">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEACabRequest">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECabRequest">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabRequest.CantReg">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabRequest.PtoVta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECabRequest.CbteTipo">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAECabRequest">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEADetRequest">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEADetRequest.CAEA">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEADetRequest.CbteFchHsGen">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.Concepto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.DocTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.DocNro">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.CbteDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.CbteHasta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.CbteFch">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.ImpTotal">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.ImpTotConc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.ImpNeto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.ImpOpEx">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.ImpTrib">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.ImpIVA">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.FchServDesde">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.FchServHasta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.FchVtoPago">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.MonId">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.MonCotiz">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.CbtesAsoc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.Tributos">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.Iva">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.Opcionales">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDetRequest.Compradores">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.CbteAsoc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteAsoc.Tipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteAsoc.PtoVta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteAsoc.Nro">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.CbteAsoc.Cuit">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Tributo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Tributo.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Tributo.Desc">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Tributo.BaseImp">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Tributo.Alic">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Tributo.Importe">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.AlicIva">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.AlicIva.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.AlicIva.BaseImp">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.AlicIva.Importe">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Opcional">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Opcional.Id">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Opcional.Valor">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.Comprador">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Comprador.DocTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Comprador.DocNro">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.Comprador.Porcentaje">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEDetRequest">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse.Resultado">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse.CodAutorizacion">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse.EmisionTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse.FchVto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse.FchProceso">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse.Observaciones">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse.PtoVta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsResponse.CbteTipo">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompConsultaResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsultaResponse.ResultGet">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsultaResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsultaResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompConsultaReq">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsultaReq.CbteTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsultaReq.CbteNro">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsultaReq.PtoVta">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FERecuperaLastCbteResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FERecuperaLastCbteResponse.PtoVta">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FERecuperaLastCbteResponse.CbteTipo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FERecuperaLastCbteResponse.CbteNro">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FERecuperaLastCbteResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FERecuperaLastCbteResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.DummyResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DummyResponse.AppServer">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DummyResponse.DbServer">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.DummyResponse.AuthServer">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FERegXReqResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FERegXReqResponse.RegXReq">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FERegXReqResponse.Errors">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FERegXReqResponse.Events">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEResponse">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEResponse.FeCabResp">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEResponse.FeDetResp">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEResponse.Events">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEResponse.Errors">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAERequest">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAERequest.FeCabReq">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAERequest.FeDetReq">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAESolicitarCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAESolicitarCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAESolicitarCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompTotXRequestCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompTotXRequestCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompTotXRequestCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEDummyCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEDummyCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEDummyCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompUltimoAutorizadoCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompUltimoAutorizadoCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompUltimoAutorizadoCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompConsultarCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECompConsultarCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECompConsultarCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEARegInformativoCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEARegInformativoCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEARegInformativoCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASolicitarCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASolicitarCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASolicitarCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovimientoConsultarCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovimientoConsultarCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovimientoConsultarCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovimientoInformarCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovimientoInformarCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEASinMovimientoInformarCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEAConsultarCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FECAEAConsultarCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FECAEAConsultarCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetCotizacionCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetCotizacionCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetCotizacionCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposTributosCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposTributosCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposTributosCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposMonedasCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposMonedasCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposMonedasCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposIvaCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposIvaCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposIvaCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposOpcionalCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposOpcionalCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposOpcionalCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposConceptoCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposConceptoCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposConceptoCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetPtosVentaCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetPtosVentaCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetPtosVentaCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposCbteCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposCbteCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposCbteCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposDocCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposDocCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposDocCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposPaisesCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposPaisesCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSFEHOMO.FEParamGetTiposPaisesCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.#ctor">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.getPersonaCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.getPersonaListCompleted">
+<remarks/>
+</member>
+<member name="E:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.dummyCompleted">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.getPersona(System.String,System.String,System.Int64,System.Int64)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.getPersonaAsync(System.String,System.String,System.Int64,System.Int64)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.getPersonaAsync(System.String,System.String,System.Int64,System.Int64,System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.getPersonaList(System.String,System.String,System.Int64,System.Int64[])">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.getPersonaListAsync(System.String,System.String,System.Int64,System.Int64[])">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.getPersonaListAsync(System.String,System.String,System.Int64,System.Int64[],System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.dummy">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.dummyAsync">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.dummyAsync(System.Object)">
+<remarks/>
+</member>
+<member name="M:SocCam_Mantenimiento.WSPSA5.PersonaServiceA5.CancelAsync(System.Object)">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.personaReturn">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaReturn.datosGenerales">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaReturn.datosMonotributo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaReturn.datosRegimenGeneral">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaReturn.errorConstancia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaReturn.errorMonotributo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaReturn.errorRegimenGeneral">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaReturn.metadata">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.datosGenerales">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.apellido">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.dependencia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.domicilioFiscal">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.estadoClave">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.fechaContratoSocial">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.fechaContratoSocialSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.idPersona">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.idPersonaSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.mesCierre">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.mesCierreSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.nombre">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.razonSocial">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.tipoClave">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosGenerales.tipoPersona">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.dependencia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.codPostal">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.descripcionDependencia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.descripcionProvincia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.direccion">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.idDependencia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.idDependenciaSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.idProvincia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.idProvinciaSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dependencia.localidad">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.dummyReturn">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dummyReturn.appserver">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dummyReturn.authserver">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dummyReturn.dbserver">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.persona">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.persona.datosGenerales">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.persona.datosMonotributo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.persona.datosRegimenGeneral">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.persona.errorConstancia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.persona.errorMonotributo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.persona.errorRegimenGeneral">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.datosMonotributo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosMonotributo.actividadMonotributista">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosMonotributo.categoriaMonotributo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosMonotributo.componenteDeSociedad">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosMonotributo.impuesto">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.actividad">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.descripcionActividad">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.idActividad">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.idActividadSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.nomenclador">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.nomencladorSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.orden">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.ordenSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.periodo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.actividad.periodoSpecified">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.categoria">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.categoria.descripcionCategoria">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.categoria.idCategoria">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.categoria.idCategoriaSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.categoria.idImpuesto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.categoria.idImpuestoSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.categoria.periodo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.categoria.periodoSpecified">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.relacion">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.apellidoPersonaAsociada">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.ffRelacion">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.ffRelacionSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.ffVencimiento">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.ffVencimientoSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.idPersonaAsociada">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.idPersonaAsociadaSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.nombrePersonaAsociada">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.razonSocialPersonaAsociada">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.relacion.tipoComponente">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.impuesto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.impuesto.descripcionImpuesto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.impuesto.idImpuesto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.impuesto.idImpuestoSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.impuesto.periodo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.impuesto.periodoSpecified">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.datosRegimenGeneral">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosRegimenGeneral.actividad">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosRegimenGeneral.categoriaAutonomo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosRegimenGeneral.impuesto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.datosRegimenGeneral.regimen">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.regimen">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.regimen.descripcionRegimen">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.regimen.idImpuesto">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.regimen.idImpuestoSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.regimen.idRegimen">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.regimen.idRegimenSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.regimen.periodo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.regimen.periodoSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.regimen.tipoRegimen">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.errorConstancia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorConstancia.apellido">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorConstancia.error">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorConstancia.idPersona">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorConstancia.idPersonaSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorConstancia.nombre">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.errorMonotributo">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorMonotributo.error">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorMonotributo.mensaje">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.errorRegimenGeneral">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorRegimenGeneral.error">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.errorRegimenGeneral.mensaje">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.personaListReturn">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaListReturn.metadata">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.personaListReturn.persona">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.metadata">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.metadata.fechaHora">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.metadata.fechaHoraSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.metadata.servidor">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.domicilio">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.codPostal">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.datoAdicional">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.descripcionProvincia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.direccion">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.idProvincia">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.idProvinciaSpecified">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.localidad">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.tipoDatoAdicional">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.domicilio.tipoDomicilio">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.getPersonaCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.getPersonaCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.getPersonaCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.getPersonaListCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.getPersonaListCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.getPersonaListCompletedEventArgs.Result">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.dummyCompletedEventHandler">
+<remarks/>
+</member>
+<member name="T:SocCam_Mantenimiento.WSPSA5.dummyCompletedEventArgs">
+<remarks/>
+</member>
+<member name="P:SocCam_Mantenimiento.WSPSA5.dummyCompletedEventArgs.Result">
+<remarks/>
+</member>
+</members>
+</doc>

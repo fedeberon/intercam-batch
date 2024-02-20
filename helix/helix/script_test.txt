@@ -1,0 +1,43 @@
+DATABASE_NAME = soccam
+DATABASE_TYPE = SQL_SERVER
+
+# Los nombres de los campos se escriben SIN PREFIJO!!!
+TABLE socio
+id = pk, auto:1/1, !NULL
+nombre = string, !NULL
+apellido = string, !NULL
+nacionalidad = string,
+dni = string,
+fechaNacimiento = date
+cuit = string, lenght:11
+mail = string,
+firma = string,
+tipoEmpresa = string,
+domicilio = string,
+telefono = string,
+tipoSocio = pkfield
+numero = int
+fechaAprobacion = date
+acta = int
+padrino1 = pkfield
+padrino2 = pkfield
+sector = int
+deleted = bool
+tieneCajaSeguridad = bool
+END TABLE
+
+TABLE pagosSocios
+id = pk, auto:1/10, !NULL
+socio = pkfield, !NULL
+plan = pkfield, !NULL
+anio = int, !NULL
+periodo = int, !NULL
+observaciones = string, max
+END TABLE
+
+TABLE tipoSocio
+id = pk, auto:1/10, !NULL
+nombre = string, !NULL
+importe = money, !NULL
+periodicidad = int, !NULL
+END TABLE

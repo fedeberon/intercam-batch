@@ -1,0 +1,44 @@
+C:\Users\Alejandro\Documents\Visual Studio 2012\Projects\TextBoxX\TextBoxX\bin\Debug\TextBoxX.dll
+C:\Users\Alejandro\Documents\Visual Studio 2012\Projects\TextBoxX\TextBoxX\bin\Debug\TextBoxX.pdb
+C:\Users\Alejandro\Documents\Visual Studio 2012\Projects\TextBoxX\TextBoxX\bin\Debug\TextBoxX.xml
+C:\Users\Alejandro\Documents\Visual Studio 2012\Projects\TextBoxX\TextBoxX\obj\Debug\TextBoxX.Resources.resources
+C:\Users\Alejandro\Documents\Visual Studio 2012\Projects\TextBoxX\TextBoxX\obj\Debug\TextBoxX.vbproj.GenerateResource.Cache
+C:\Users\Alejandro\Documents\Visual Studio 2012\Projects\TextBoxX\TextBoxX\obj\Debug\TextBoxX.dll
+C:\Users\Alejandro\Documents\Visual Studio 2012\Projects\TextBoxX\TextBoxX\obj\Debug\TextBoxX.xml
+C:\Users\Alejandro\Documents\Visual Studio 2012\Projects\TextBoxX\TextBoxX\obj\Debug\TextBoxX.pdb
+Z:\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.dll
+Z:\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.pdb
+Z:\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.xml
+Z:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.Resources.resources
+Z:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.vbproj.GenerateResource.Cache
+Z:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.dll
+Z:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.xml
+Z:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.pdb
+G:\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.dll
+G:\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.pdb
+G:\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.xml
+G:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.Resources.resources
+G:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.vbproj.GenerateResource.Cache
+G:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.dll
+G:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.xml
+G:\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.pdb
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.dll
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.pdb
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\bin\Debug\TextBoxX.xml
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.Resources.resources
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.TextBoxX.resources
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.vbproj.GenerateResource.Cache
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.dll
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.xml
+C:\Users\Alejandro\Google Drive\Dev\TextBoxX\TextBoxX\obj\Debug\TextBoxX.pdb
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\bin\Debug\TextBoxX.dll
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\bin\Debug\TextBoxX.pdb
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\bin\Debug\TextBoxX.xml
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\obj\Debug\TextBoxX.vbproj.AssemblyReference.cache
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\obj\Debug\TextBoxX.Resources.resources
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\obj\Debug\TextBoxX.TextBoxX.resources
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\obj\Debug\TextBoxX.vbproj.GenerateResource.cache
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\obj\Debug\TextBoxX.vbproj.CoreCompileInputs.cache
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\obj\Debug\TextBoxX.dll
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\obj\Debug\TextBoxX.xml
+C:\Users\Logico\Documents\GitHub\TextBoxX\TextBoxX\obj\Debug\TextBoxX.pdb

@@ -1,0 +1,1093 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+helix
+</name>
+</assembly>
+<members>
+<member name="T:helix.My.Resources.Resources">
+<summary>
+  Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.
+</summary>
+</member>
+<member name="P:helix.My.Resources.Resources.ResourceManager">
+<summary>
+  Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
+</summary>
+</member>
+<member name="P:helix.My.Resources.Resources.Culture">
+<summary>
+  Reemplaza la propiedad CurrentUICulture del subproceso actual para todas las
+  búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
+</summary>
+</member>
+<member name="T:helix.Ermac">
+ <summary>
+ Controlador de errores y logs del sistema
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:helix.Ermac.LogFilePath">
+ <summary>
+ Path donde se va encuentra o se va a crear el archivo de log
+ </summary>
+ <value>Cadena con la ruta y nombre de archivo log</value>
+ <returns>La ruta completa con nombre de archivo log</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.Ermac.isHidden">
+ <summary>
+ Propiedad de visiblidad del archivo en el sistema operativo
+ </summary>
+ <value>Booleano indicando el estado. True: el archivo esta oculto, False: el archivo esta visible</value>
+ <returns>La </returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.Ermac.LogLevel">
+ <summary>
+ Nivel de detalle de logueo
+ </summary>
+ <value>El nivel de logueo</value>
+ <returns>Nivel de logueo actual</returns>
+ <remarks>0: Disable, 1: estandar, 2:debug</remarks>
+</member>
+<member name="P:helix.Ermac.Timestamp">
+ <summary>
+ Timestamp de cuando ocurrio el problema
+ </summary>
+ <value>El tiempo y la hora del error</value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.Ermac.SubSystem">
+ <summary>
+ Nombre del subsistema donde ocurrio el error
+ </summary>
+ <value>Cadena con el nombre del subsistema donde ocurrio el error</value>
+ <returns>El nombre del subsistema</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.Ermac.ModuleName">
+ <summary>
+ Nombre del modulo donde ocurrio el error
+ </summary>
+ <value>Cadena con el nombre del modulo donde fallo</value>
+ <returns>El nombre del modulo donde ocurrio el fallo</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.Ermac.Description">
+ <summary>
+ Descripcion del error
+ </summary>
+ <value>Cadena con la descripcion del error</value>
+ <returns>La descripcion del error</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.Ermac.Code">
+ <summary>
+ Codigos de error
+ </summary>
+ <value>Entero con codigo del error</value>
+ <returns>El codigo de error</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.Ermac.ErrorLevel">
+ <summary>
+ Nivel de error
+ </summary>
+ <value>El nivel de error</value>
+ <returns>0: bajo, 1: medio, 2: grave, 3: catastrofico</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.Ermac.Save">
+ <summary>
+ Guarda una entrada de error en el log
+ </summary>
+ <returns>True si se pudo crear el archivo y/o guardar la entrada, False si fallo</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.Ermac.CreateLogFile">
+ <summary>
+ Crea un nuevo archivo de log
+ </summary>
+ <returns>True si se pudo crear, False si fallo</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.JoinQuery.AddLogicalOperator(System.String)">
+ <summary>
+ Union entre 2 o mas JoinQueries, por ejemplo AND, OR, etc
+ </summary>
+ <param name="logicalOperator">Cadena con el operador logico entre 2 JoinQueries</param>
+ <remarks></remarks>
+</member>
+<member name="T:helix.SQLBase.ColumnValue">
+ <summary>
+ Estructura que contiene el par (Columna,Valor)
+ </summary>
+</member>
+<member name="F:helix.SQLBase._connectionString">
+ <summary>
+ Cadena de conexion a la base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLBase._tableName">
+ <summary>
+ Nombre de la tabla a trabajar
+ </summary>
+</member>
+<member name="F:helix.SQLBase._dbType">
+ <summary>
+ Tipo de base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLBase._WHEREstring">
+ <summary>
+ Cadena conteniendo la clausula WHERE.
+ </summary>
+ <remarks>El formato es "(campo1 = ?) AND (campo2 = ?)"</remarks>
+</member>
+<member name="F:helix.SQLBase._QueryParam">
+ <summary>
+ Lista de objetos para ser pasados a la consulta y reemplazados en la clausula WHERE
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLBase._queryString">
+ <summary>
+ La consulta que se va a relizar contra la base de datos
+ </summary>
+</member>
+<member name="P:helix.SQLBase.ConnectionString">
+ <summary>
+ Guarda o retorna la cadena de conexion a la base de datos segun los parametros ingresados
+ </summary>
+ <returns>La cadena de conexion a la base de datos</returns>
+</member>
+<member name="P:helix.SQLBase.DbType">
+ <summary>
+ Guarda o retorna el tipo de base de datos con la que se va a trabajar
+ </summary>
+ <value>Entero mayor que 0 indicando el tipo de base de datos. MS Access = 0 / SQL Server = 1</value>
+ <returns>El tipo de base de datos a trabajar</returns>
+</member>
+<member name="P:helix.SQLBase.SqlQueryString">
+ <summary>
+ Retorna la cadena con la consulta SQL que se va a hacer contra la base de datos
+ </summary>
+ <returns>La consulta SQL</returns>
+</member>
+<member name="P:helix.SQLBase.TableName">
+ <summary>
+ Guarda o retorna el nombre de la tabla a trabajar
+ </summary>
+ <returns>El nombre de la tabla utilizada actualmente</returns>
+</member>
+<member name="M:helix.SQLBase.Reset">
+ <summary>
+ Reinicia la clase a sus valores originales
+ </summary>
+</member>
+<member name="M:helix.SQLBase.GenerateQuery(System.Boolean)">
+ <summary>
+ Genera una consulta SQL segun los parametros de la clase. Segun se escoja puede devolver una cadena para ser procesada por el SQLCore
+ o una cadena para depuracion
+ </summary>
+ <param name="toProcess">TRUE si la cadena va a ser procesada por SQLCore, FALSE si se usa como depuracion</param>
+ <returns>Una consulta SQL</returns>
+</member>
+<member name="F:helix.SQLCore.LastError">
+ <summary>
+ Controlador de error
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLCore.dbType">
+ <summary>
+ Setea o devuelve el tipo de base de datos
+ </summary>
+ <value>0 si es MS Access / 1 si es SQL Server / 2 mysql</value>
+ <returns>El tipo de base de datos actual</returns>
+</member>
+<member name="M:helix.SQLCore.TestConnection">
+ <summary>
+ Testea la conexion a la base de datos
+ </summary>
+ <returns>TRUE si la conexion tuvo exito. FALSE si falla</returns>
+</member>
+<member name="M:helix.SQLCore.Reset">
+ <summary>
+ Reinicia todas las variables a sus valores originales
+ </summary>
+</member>
+<member name="P:helix.SQLCore.QueryString">
+ <summary>
+ Setea o devuelve la cadena con la consulta a ejecutar
+ </summary>
+ <value>Cadena con consulta SQL</value>
+ <returns>La consulta SQL</returns>
+</member>
+<member name="M:helix.SQLCore.ExecuteNonQuery(System.Boolean,System.Collections.Generic.List{System.Data.OleDb.OleDbParameter})">
+ <summary>
+ Ejecuta una consulta que no requiere devolver datos (ej: dataReader, SQLSchema, etc)
+ </summary>
+ <param name="processParam">Flag indicando si hay parametros para ser procesados</param>
+ <param name="Param">Lista de parametros</param>
+ <returns>El resultado de la operacion. TRUE se ejecuto con exito, FALSE fallo</returns>
+</member>
+<member name="M:helix.SQLCore.ExecuteNonQuery(System.Boolean,System.Collections.Generic.List{System.Data.SqlClient.SqlParameter})">
+ <summary>
+ Ejecuta una consulta que no requiere devolver datos (ej: dataReader, SQLSchema, etc)
+ </summary>
+ <param name="processParam">Flag indicando si hay parametros para ser procesados</param>
+ <param name="Param">Lista de parametros</param>
+ <returns>El resultado de la operacion. TRUE se ejecuto con exito, FALSE fallo</returns>
+</member>
+<member name="M:helix.SQLCore.ExecuteNonQuery(System.Boolean,System.Collections.Generic.List{System.Data.OleDb.OleDbParameter},System.Int64@)">
+ <summary>
+ Ejecuta una consulta en MS Access que requiere devolver datos (ultimo ID creado)
+ </summary>
+ <param name="processParam">Flag indicando si hay parametros para ser procesados</param>
+ <param name="Param">Lista de parametros</param>
+ <param name="lastID">Contenedor donde va a ser devuelto el ultimo ID creado</param>
+ <returns>El resultado de la operacion. TRUE se ejecuto con exito, FALSE fallo</returns>
+</member>
+<member name="M:helix.SQLCore.ExecuteNonQuery(System.Boolean,System.Collections.Generic.List{System.Data.SqlClient.SqlParameter},System.Int64@)">
+ <summary>
+ Ejecuta una consulta en SQL Server que requiere devolver datos (ultimo ID creado)
+ </summary>
+ <param name="processParam">Flag indicando si hay parametros para ser procesados</param>
+ <param name="Param">Lista de parametros</param>
+ <param name="lastID">Contenedor donde va a ser devuelto el ultimo ID creado</param>
+ <returns>El resultado de la operacion. TRUE se ejecuto con exito, FALSE fallo</returns>
+</member>
+<member name="M:helix.SQLCore.ExecuteNonQuery(System.String)">
+ <summary>
+ Ejecuta una consulta en SQL Server que requiere devolver datos (ultimo ID creado)
+ </summary>
+ <param name="processParam">Flag indicando si hay parametros para ser procesados</param>
+ <param name="Param">Lista de parametros</param>
+ <param name="lastID">Contenedor donde va a ser devuelto el ultimo ID creado</param>
+ <returns>El resultado de la operacion. TRUE se ejecuto con exito, FALSE fallo</returns>
+</member>
+<member name="M:helix.SQLCore.ExecuteQuery(System.Boolean,System.Collections.Generic.List{System.Data.OleDb.OleDbParameter},System.Data.DataTable@)">
+ <summary>
+ Ejecuta una consulta contra una base de datos
+ </summary>
+ <param name="processParam">Flag indicando si hay parametros a procesar</param>
+ <param name="Param">Lista de parametros a procesar (Clausula WHERE)</param>
+ <param name="dbReader">DataReader donde se van a almacenar los registros recuperados</param>
+ <returns>El estado de la operacion. TRUE si la operacion fue un exito, FALSE si fallo</returns>
+</member>
+<member name="M:helix.SQLCore.ExecuteQuery(System.Boolean,System.Collections.Generic.List{System.Data.SqlClient.SqlParameter},System.Data.DataTable@)">
+ <summary>
+ Ejecuta una consulta contra una base de datos
+ </summary>
+ <param name="processParam">Flag indicando si hay parametros a procesar</param>
+ <param name="Param">Lista de parametros a procesar (Clausula WHERE)</param>
+ <param name="dbReader">DataReader donde se van a almacenar los registros recuperados</param>
+ <returns>El estado de la operacion. TRUE si la operacion fue un exito, FALSE si fallo</returns>
+</member>
+<member name="F:helix.SQLEngine._AccessProvider">
+ <summary>
+ Cadena constante para el proveedor de db MS Access
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._AccessConnTrailer">
+ <summary>
+ Constante con el final de la cadena de conexion a MS Access
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._SQLServerProvider">
+ <summary>
+ Cadena constante para el proveedor de db SQL Server
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._SQLServerAuthentication">
+ <summary>
+ Flag de la cadena de conexion que indica que se van a pasar nombre de usuario y contraseña como credenciales
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._SQLServerConnTrailer">
+ <summary>
+ Constante con el final de la cadena de conexion a SQL Server
+ </summary>
+</member>
+<member name="F:helix.SQLEngine.Delete">
+ <summary>
+ Clase encargada de la eliminacion de registros
+ </summary>
+</member>
+<member name="F:helix.SQLEngine.Insert">
+ <summary>
+ Clase encargada de la creacion de registros nuevos
+ </summary>
+</member>
+<member name="F:helix.SQLEngine.Update">
+ <summary>
+ Clase encargada de las actualizaciones de registros
+ </summary>
+</member>
+<member name="F:helix.SQLEngine.Query">
+ <summary>
+ Clase encargada de extraer registros de la base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLEngine.Db">
+ <summary>
+ Clase encargada del manejo de la base de datos (creacion, mantenimiento y borrado de tablas)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngine.Builder">
+ <summary>
+ Clase intermedia creadora de base de datos, tablas y usuarios
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngine.LogFileFullName">
+ <summary>
+ Ruta completa y nombre de archivo donde se van a guardar los logs
+ </summary>
+ <value>Cadena con la ruta completa y el nombre de archivo del log</value>
+ <returns>La ruta y el nombre del archivo log</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngine.AccessConnectionString">
+ <summary>
+ Cadena de conexion a la base de datos de Access
+ </summary>
+ <returns>La cadena de conexon a la base de datos de MS Access</returns>
+</member>
+<member name="F:helix.SQLEngine._connectionString">
+ <summary>
+ Cadena de conexion a la base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._dbType">
+ <summary>
+ Tipo de base de datos. MsAccess = 0 / SQL Server = 1 / MySql = 2
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngine._dbUsername">
+ <summary>
+ Nombre de usuario para acceso a la base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._dbPassword">
+ <summary>
+ Contraseña para acceso a la base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._requiereCredentials">
+ <summary>
+ Flag indicando si requiere credenciales (user/password) para ingresar a la base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._dbPath">
+ <summary>
+ Ruta de la base de datos. Puede ser un numero de IP, nombre de dominio o ruta de un sistema de archivos
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._dbName">
+ <summary>
+ Nombre de la base de datos a conectar. Solo para uso con bases SQL Server
+ </summary>
+</member>
+<member name="F:helix.SQLEngine._dbPort">
+ <summary>
+ El puerto de escucha del servidor
+ </summary>
+</member>
+<member name="P:helix.SQLEngine.dbType">
+ <summary>
+ Guarda o retorna el tipo de base de datos con la que se va a trabajar
+ </summary>
+ <value>Entero mayor que 0 indicando el tipo de base de datos. MS Access = 0 / SQL Server = 1 / MySQL = 2</value>
+ <returns>El tipo de base de datos a trabajar</returns>
+</member>
+<member name="P:helix.SQLEngine.RequireCredentials">
+ <summary>
+ Guarda o retorna un flag indicando si la conexion requiere credenciales de seguridad
+ </summary>
+ <value>Valor booleano indicando si requiere credenciales. TRUE = Requiere credendiales / FALSE = No requiere credenciales</value>
+ <returns>Si requiere credenciales</returns>
+</member>
+<member name="P:helix.SQLEngine.Path">
+ <summary>
+ Guarda o retorna una cadena con la ruta a la base de datos. Puede ser un numero de IP, nombre de dominio o ruta dentro del sistema de archivos
+ </summary>
+ <value>Cadena con la ruta a la base de datos</value>
+ <returns>La ruta de la base de datos</returns>
+</member>
+<member name="P:helix.SQLEngine.Username">
+ <summary>
+ Guarda o retorna el nombre de usuario para ingresar a la base de datos
+ </summary>
+ <value>Cadena de caracteres con el nombre de usuario</value>
+ <returns>El nombre de usuario</returns>
+</member>
+<member name="P:helix.SQLEngine.Password">
+ <summary>
+ Guarda o retorna la contraseña para ingresar a la base de datos
+ </summary>
+ <value>Cadena conteniendo la contraseña de la base de datos</value>
+ <returns>La contraseña de la base de datos</returns>
+</member>
+<member name="P:helix.SQLEngine.ConnectionString">
+ <summary>
+ Retorna la cadena de conexion a la base de datos segun los parametros ingresados
+ </summary>
+ <returns>La cadena de conexion a la base de datos</returns>
+</member>
+<member name="P:helix.SQLEngine.DatabaseName">
+ <summary>
+ Guarda o retorna el nombre de la base de datos SQL Server
+ </summary>
+ <value>Nombre de la base de datos</value>
+ <returns>El nombre de la base de datos</returns>
+</member>
+<member name="P:helix.SQLEngine.Port">
+ <summary>
+ Guarda o retorna el puerto de escucha del servidor
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:helix.SQLEngine.IsStarted">
+ <summary>
+ Indica si el motor esta encendido o apagado
+ </summary>
+ <value>Valor booleano indicando el estado del motor</value>
+ <returns>El estado del motor, TRUE si esta encendido, FALSE si no</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngine.GenerateConnectionString">
+ <summary>
+ Genera la cadena de conexion a la base de datos
+ </summary>
+ <returns>La cadena de conexion</returns>
+</member>
+<member name="M:helix.SQLEngine.Start">
+ <summary>
+ Inicia el motor sql, carga las variables en las distintas instancias y realiza una prueba de conexion
+ </summary>
+ <returns>True si inicio correctamente. False si hubo algun fallo</returns>
+</member>
+<member name="M:helix.SQLEngine.ColdBoot">
+ <summary>
+ Inicia el motor sql sin hacer pruebas de conexion
+ </summary>
+ <returns>True si inicio correctamente. False si hubo algun fallo</returns>
+</member>
+<member name="M:helix.SQLEngine.InitializeObjects">
+ <summary>
+ Inicializa los objetos SQLEngine
+ </summary>
+</member>
+<member name="M:helix.SQLEngine.SendSQLStatement(System.String,System.Boolean,System.Object[],System.Data.DataTable@)">
+ <summary>
+ Envia una consulta SQL directamente sin tener que usar alguno de los subsistemas
+ </summary>
+ <param name="statement">La consulta de SQL, los parametros deben ingresarse como el caracter '?'</param>
+ <param name="isQuery">Flag indicando si la consulta devuelve resultados. TRUE si devuelve resultado, FALSE si no</param>
+ <param name="parameters">Lista de parametros de la consulta</param>
+ <param name="queryResult">Contenedor del resultado de la consulta</param>
+ <returns>TRUE si la operacion se realizo con exito, FALSE si fallo</returns>
+ <remarks>Uso: sqlEngine.SendSQLStatement("SELECT * FROM Tabla WHERE (ID >= ?) AND (Username = ?", True, {6, "Usuario"}, tablaResultado)</remarks>
+</member>
+<member name="T:helix.SQLEngineBuilder.cursorType">
+ <summary>
+ Opciones de tipos de cursores
+ </summary>
+</member>
+<member name="F:helix.SQLEngineBuilder._dbRoles">
+ <summary>
+ Lista de roles del usuario de 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:helix.SQLEngineBuilder.parametizationType">
+ <summary>
+ Tipos de parametizaciones
+ </summary>
+</member>
+<member name="T:helix.SQLEngineBuilder.accessType">
+ <summary>
+ Tipos de accesos
+ </summary>
+</member>
+<member name="T:helix.SQLEngineBuilder.recoveryType">
+ <summary>
+ Tipos de recuperacion
+ </summary>
+</member>
+<member name="T:helix.SQLEngineBuilder.pageVerifyType">
+ <summary>
+ Tipos de verificacion de pagina
+ </summary>
+</member>
+<member name="T:helix.SQLEngineBuilder.delayedDurabilityType">
+ <summary>
+ Tipos de durabilidad retrasada
+ </summary>
+</member>
+<member name="P:helix.SQLEngineBuilder.DataBaseName">
+ <summary>
+ Nombre de la base de datos a crearse
+ </summary>
+ <value>Cadena con el nombre de la base a crearse</value>
+ <returns>El nombre de la base a crearse</returns>
+ <remarks>Si en el archivo de script no se encuentra el nombre de la base de datos se utiliza esta</remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.ServerName">
+ <summary>
+ Nombre del servidor
+ </summary>
+ <value>Puede ser una direccion de IP, servidor/instancia o </value>
+ <returns>El nombre del servidor de base de datos</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.CreateDbUser">
+ <summary>
+ Indica si debe crearse un usuario especifico para el manejo de la base de datos
+ </summary>
+ <value>Un booleano indicando si debe o no crearse un usuario nuevo</value>
+ <returns>Si debe crearse un usuario nuevo</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.DbUsername">
+ <summary>
+ Nombre del usuario con privilegios minimos para conectarse a la base de datos 
+ </summary>
+ <value>Cadena con el nombre de usuario para conectarse a la base de datos</value>
+ <returns>El nombre del usuario normal</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.DbPassword">
+ <summary>
+ Contraseña del usuario con privilegios minimos para conectarse a la base de datos 
+ </summary>
+ <value>Cadena con la contraseña para conectarse a la base de datos</value>
+ <returns>La contraseña del usuario normal</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.RequireCredentials">
+ <summary>
+ Modo de autenticacion a la base de datos
+ </summary>
+ <value>Booleano que indica el tipo de autenticacion: True = Windows, False = Mixta</value>
+ <returns>El tipo de autenticacion</returns>
+ <remarks>Si es true se usa autenticacion mixta, False autenticacion de Windows</remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.Username">
+ <summary>
+ El nombre de usuario en modo de autenticacion mixta
+ </summary>
+ <value>Cadena con el nombre del usuario de la base de datos</value>
+ <returns>El nombre de usuario</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.Password">
+ <summary>
+ El password en modo de autenticacion mixta
+ </summary>
+ <value>Cadena con contraseña del usuario de la base de datos</value>
+ <returns>El password del usuario</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.ModelPath">
+ <summary>
+ Ubicacion en el sistema de archivos donde se encuentra el archivo con indicaciones de creacion de tablas
+ </summary>
+ <value>Cadena con el path completo y el nombre de archivo con script de creacion de tablas</value>
+ <returns>El path completo del archivo de script para la creacion de tablas</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineBuilder.DatabaseType">
+ <summary>
+ Tipo de base de datos
+ </summary>
+ <value>El tipo de base datos</value>
+ <returns></returns>
+ <remarks>0 = Ms Access, 1 = SQL Server</remarks>
+</member>
+<member name="T:helix.SQLEngineBuilder.SQLServerDBProperties">
+ <summary>
+ Estructura con configuracion de base de datos
+ </summary>
+ <remarks>Normalmente con default es suficiente</remarks>
+</member>
+<member name="M:helix.SQLEngineBuilder.GenerateConnectionString(System.Boolean)">
+ <summary>
+ Genera una cadena de conexion
+ </summary>
+ <returns>La cadena de conexion</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineBuilder.TestConnection">
+ <summary>
+ Prueba la conexion a la base de datos para verificar que todo esta correcto
+ </summary>
+ <returns>True si se pudo conectar con exito, False si no pudo</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineBuilder.CreateNewDataBase">
+ <summary>
+ Crea una base de datos en el destino seleccionado
+ </summary>
+ <returns>True si se creo con exito, False si fallo</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineBuilder.CreateLoginUser">
+ <summary>
+ Ejecuta el script de creacion de usuario de db
+ </summary>
+ <returns>TRUE si se creo correctamente, FALSE si no</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineBuilder.GenerateUserPermissionScript">
+ <summary>
+ Genera el script para crear el usuario normal del sistema
+ </summary>
+ <returns>Cadena con el script de creacion de usuario</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineBuilder.CreateTable">
+ <summary>
+ Ejecuta el script de creacion de tabla en la base de datos 
+ </summary>
+ <returns>True si se ejecuto el script con exito, False si fallo</returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineBuilder.GenerateTableScript">
+ <summary>
+ Genera el comando para crear las tablas
+ </summary>
+ <returns>Cadena con el comando para crear la/s tablas</returns>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngineDB._connectionString">
+ <summary>
+ Cadena de conexion a la base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLEngineDB._dbType">
+ <summary>
+ Tipo de base de datos
+ </summary>
+</member>
+<member name="F:helix.SQLEngineDB._dbInfo">
+ <summary>
+ La informacion de la base de datos
+ </summary>
+ <remarks>Almacena un schema de la base de datos para extraccion de informacion de la propia base (cantidad de tablas, etc)</remarks>
+</member>
+<member name="P:helix.SQLEngineDB.ConnectionString">
+ <summary>
+ Guarda o retorna la cadena de conexion a la base de datos segun los parametros ingresados
+ </summary>
+ <returns>La cadena de conexion a la base de datos</returns>
+</member>
+<member name="P:helix.SQLEngineDB.DbType">
+ <summary>
+ Guarda o retorna el tipo de base de datos con la que se va a trabajar
+ </summary>
+ <value>Entero mayor que 0 indicando el tipo de base de datos. MS Access = 0 / SQL Server = 1</value>
+ <returns>El tipo de base de datos a trabajar</returns>
+</member>
+<member name="M:helix.SQLEngineDB.TestDbConnection">
+ <summary>
+ Prueba que la conexion a la base de datos sea correcta
+ </summary>
+ <returns>TRUE si la conexion se realizo con exito, FALSE si no se puedo conectar</returns>
+</member>
+<member name="M:helix.SQLEngineDB.Reset">
+ <summary>
+ Reinicia el objeto a sus valores originales
+ </summary>
+</member>
+<member name="M:helix.SQLEngineDB.GetDbInfo">
+ <summary>
+ Adquiere el esquema de la base de datos para poder ser procesada
+ </summary>
+ <returns>True si la transaccion es correcta. False si fallo</returns>
+</member>
+<member name="M:helix.SQLEngineDB.GetTableName(System.Int32)">
+ <summary>
+ Traduce de un indice a una cadena de caracteres con el nombre de la tabla
+ </summary>
+ <param name="index">Indice de la tabla a ser traducida</param>
+ <returns>El nombre de la tabla si el indice es correcto, cadena nula en caso de fallar</returns>
+</member>
+<member name="M:helix.SQLEngineDB.TablesCount">
+ <summary>
+ Indica la cantidad de tablas de usuario contenida en la base
+ </summary>
+ <returns>La cantidad de tablas de usuarios en la base de datos</returns>
+</member>
+<member name="M:helix.SQLEngineDelete.SimpleSearch(System.String,helix.SQLEngineDelete.OperatorCriteria,System.Object,System.Object)">
+ <summary>
+ Agrega un query simple del formato COLUMNA operador VALOR [AND VALOR]
+ </summary>
+ <param name="column">Columna a buscar</param>
+ <param name="searchOperator">Operador a utilizar: =, !=...</param>
+ <param name="value">Valor a buscar</param>
+ <param name="valueEnd">Opcional cuando se usa BETWEEN</param>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineDelete.LogFileFullName">
+ <summary>
+ Ruta completa y nombre de archivo donde se van a guardar los logs
+ </summary>
+ <value>Cadena con la ruta completa y el nombre de archivo del log</value>
+ <returns>La ruta y el nombre del archivo log</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineDelete.WHEREstring">
+ <summary>
+ Guarda o retorna la cadena con la clausula WHERE
+ </summary>
+ <returns>La cadena con la clausula WHERE actual</returns>
+</member>
+<member name="M:helix.SQLEngineDelete.AddWHEREparam(System.Object)">
+ <summary>
+ Agrega un nuevo elemento a la lista de parametros WHERE
+ </summary>
+ <param name="param">Un objeto para ser usado posteriormente en un comando SQL</param>
+</member>
+<member name="M:helix.SQLEngineDelete.p(System.Object)">
+ <summary>
+ Agrega un parametro a la lista de parametros. Para usar en la interpolación de WHEREString
+ </summary>
+ <param name="param">Un objeto para ser usado posteriormente en un comando SQL</param>
+ <returns>Retorna el caracter ? para ser usado en la construcción de la query</returns>
+</member>
+<member name="M:helix.SQLEngineDelete.DeleteAll">
+ <summary>
+ Elimina todos los registros de una tabla
+ </summary>
+ <returns>TRUE si la operacion se realizo con exito. FALSE si fallo</returns>
+</member>
+<member name="M:helix.SQLEngineDelete.Delete">
+ <summary>
+ Elimina registros segun se especifique en la clausula WHERE
+ </summary>
+ <returns>TRUE Si la operacion fue un exito, FALSE si se omitio la clausula WHERE o fallo la operacion de borrado</returns>
+</member>
+<member name="M:helix.SQLEngineDelete.Reset">
+ <summary>
+ Reinicia la clase a sus valores originales
+ </summary>
+</member>
+<member name="M:helix.SQLEngineDelete.GenerateQuery(System.Boolean)">
+ <summary>
+ Genera una consulta SQL "DELETE" segun los parametros de la clase. Segun se escoja puede devolver una cadena para ser procesada por el SQLCore
+ o una cadena para depuracion
+ </summary>
+ <param name="toProcess">TRUE si la cadena va a ser procesada por SQLCore, FALSE si se usa como depuracion</param>
+ <returns>Una consulta SQL "DELETE"</returns>
+</member>
+<member name="P:helix.SQLEngineInsert.LogFileFullName">
+ <summary>
+ Ruta completa y nombre de archivo donde se van a guardar los logs
+ </summary>
+ <value>Cadena con la ruta completa y el nombre de archivo del log</value>
+ <returns>La ruta y el nombre del archivo log</returns>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngineInsert._listOfInsert">
+ <summary>
+ Lista de parametros Columna/Valor para ser insertados en la tabla
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineInsert.AddColumnValue(System.String,System.Object)">
+ <summary>
+ Ingresa un nuevo par Column/Value a la lista de parametros para usar en la consulta INSERT
+ </summary>
+ <param name="column">Nombre de la columna</param>
+ <param name="value">Valor a ser insertado</param>
+</member>
+<member name="M:helix.SQLEngineInsert.Insert">
+ <summary>
+ Crea una nuevo registro en la tabla
+ </summary>
+ <returns>El estado de la operacion. TRUE si la operacion fue un exito, FALSE si fallo</returns>
+</member>
+<member name="M:helix.SQLEngineInsert.Insert(System.Int64@)">
+ <summary>
+ Inserta un nuevo registro en la base de datos y devuelve el ultimo ID creado
+ </summary>
+ <param name="lastID">Contenedor donde se devuelve el ultimo ID creado</param>
+ <returns>El estado de la operacion. TRUE si la operacion fue un exito, FALSE si fallo</returns>
+</member>
+<member name="M:helix.SQLEngineInsert.Reset">
+ <summary>
+ Reinicia la clase a sus valores originales
+ </summary>
+</member>
+<member name="M:helix.SQLEngineInsert.GenerateQuery(System.Boolean)">
+ <summary>
+ Genera una consulta SQL "INSERT" segun los parametros de la clase. Segun se escoja puede devolver una cadena para ser procesada por el SQLCore
+ o una cadena para depuracion
+ </summary>
+ <param name="toProcess">TRUE si la cadena va a ser procesada por SQLCore, FALSE si se usa como depuracion</param>
+ <returns>Una consulta SQL "INSERT"</returns>
+</member>
+<member name="P:helix.SQLEngineQuery.LogFileFullName">
+ <summary>
+ Ruta completa y nombre de archivo donde se van a guardar los logs
+ </summary>
+ <value>Cadena con la ruta completa y el nombre de archivo del log</value>
+ <returns>La ruta y el nombre del archivo log</returns>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngineQuery._joinQuery">
+ <summary>
+ Almacena las partes de la consulta JOIN
+ </summary>
+</member>
+<member name="F:helix.SQLEngineQuery._flagReaderReady">
+ <summary>
+ Flag indicando si el DataReader esta disponible para ser leido
+ </summary>
+</member>
+<member name="F:helix.SQLEngineQuery._joinCount">
+ <summary>
+ Indica la cantidad de JOIN anidados
+ </summary>
+</member>
+<member name="F:helix.SQLEngineQuery._queryResult">
+ <summary>
+ Abstraccion del tipo de base de datos utilizado
+ </summary>
+ <remarks>Se utiliza esta tabla temporal para almacenar los resultados de las consultas una vez cerrada la conexion a la base de datos</remarks>
+</member>
+<member name="F:helix.SQLEngineQuery._queryResultReader">
+ <summary>
+ Lector de la consulta
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngineQuery._columnCount">
+ <summary>
+ Cantidad de columnas devueltas en la consulta
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngineQuery._recordCount">
+ <summary>
+ Cantidad de registros devueltos en la consulta
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngineQuery._selectColumn">
+ <summary>
+ Almacena las columnas de las que se quieren recuperar los registros
+ </summary>
+</member>
+<member name="F:helix.SQLEngineQuery._orderColumn">
+ <summary>
+ Almacena las columnas que se quieren ordenar
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:helix.SQLEngineQuery.sortOrder">
+ <summary>
+ Modo de ordenacion del resultado el query
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineQuery.AddFirstJoin(System.String,System.String,System.String,System.String)">
+ <summary>
+ Agrega la primera clausula JOIN
+ </summary>
+ <param name="table1">Primera tabla de comparacion</param>
+ <param name="table2">Segunda tabla de comparacion</param>
+ <param name="commonColumnTable1">Primera columna en comun entre tabla</param>
+ <param name="commonColumnTable2">Segunda columna en comun entre tablas</param>
+ <remarks>Estructura de un JOIN simple (SELECT * FROM (table1 INNER JOIN table2 ON commonColumnTable1 = commonColumnTable2)
+ El @ sera reemplazado por la cantidad de "(" necesarios en la consulta final para que los JOIN anidados cierren sus respectivos parentesis
+ </remarks>
+</member>
+<member name="M:helix.SQLEngineQuery.AddOrderColumn(System.String,helix.SQLEngineQuery.sortOrder)">
+ <summary>
+ Agrega una columna con el metodo de ordenacion
+ </summary>
+ <param name="column">Nombre de la columna a ordenar</param>
+ <param name="sortingOrder">Metodo de ordenacion</param>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineQuery.AddNestedJoin(System.String,System.String,System.String)">
+ <summary>
+ Agrega una nueva clausula JOIN anidada a la consulta
+ </summary>
+ <param name="table">Tabla que se agrega a la comparacion</param>
+ <param name="commonColumnTable1">Columna en comun con las primeras 2 tablas (agregadas en AddFirstJoin)</param>
+ <param name="commonColumnTable2">Columna en comun de la tabla que se agrega a la comparacion</param>
+ <remarks>Estructura de una JOIN query compuesta
+ SELECT * FROM (tabla1 INNER JOIN tabla2 ON tabla1.columnaComun = tabla2.columnaComun) INNER JOIN tabla3 ON tabla1.columnaComun = tabla3.columnaComun
+ Lo que se agrega en esta funcion es el segundo (y sucesivos) INNER JOIN a la consulta
+ </remarks>
+</member>
+<member name="P:helix.SQLEngineQuery.WHEREstring">
+ <summary>
+ Guarda o retorna la cadena con la clausula WHERE
+ </summary>
+ <returns>La cadena con la clausula WHERE actual</returns>
+</member>
+<member name="P:helix.SQLEngineQuery.ColumnCount">
+ <summary>
+ Cantidad de columnas devueltas en la consulta
+ </summary>
+ <returns>La cantidad de columnas devueltas</returns>
+</member>
+<member name="P:helix.SQLEngineQuery.RecordCount">
+ <summary>
+ Cantidad de registros devueltos por la consulta
+ </summary>
+ <returns>La cantidad de registros devueltos</returns>
+</member>
+<member name="M:helix.SQLEngineQuery.AddWHEREparam(System.Object)">
+ <summary>
+ Agrega un nuevo elemento a la lista de parametros WHERE
+ </summary>
+ <param name="param">Un objeto para ser usado posteriormente en un comando SQL</param>
+</member>
+<member name="M:helix.SQLEngineQuery.p(System.Object)">
+ <summary>
+ Agrega un parametro a la lista de parametros. Para usar en la interpolación de WHEREString
+ </summary>
+ <param name="param">Un objeto para ser usado posteriormente en un comando SQL</param>
+ <returns>Retorna el caracter ? para ser usado en la construcción de la query</returns>
+</member>
+<member name="M:helix.SQLEngineQuery.AddSelectColumn(System.String,System.String)">
+ <summary>
+ Agrega una nueva columna a la clausula SELECT
+ </summary>
+ <param name="column">Nombre de la columna</param>
+ <param name="tableName">Nombre de la tabla</param>
+</member>
+<member name="M:helix.SQLEngineQuery.QueryRead">
+ <summary>
+ Lee los datos de la consulta y avanza una posicion en la lista de registros de la consulta actual
+ </summary>
+ <returns>El resultado de la operacion. TRUE si se leyo correctamente, FALSE si el DataReader no esta preparado o falla la lectura</returns>
+</member>
+<member name="M:helix.SQLEngineQuery.GetQueryData(System.Int32)">
+ <summary>
+ Devuelve el valor de la columna en el registro actual
+ </summary>
+ <param name="index">Numero de columna</param>
+ <returns>El valor de la columna en el registro actual. Si falla devuelve FALSE</returns>
+</member>
+<member name="M:helix.SQLEngineQuery.GetQueryData(System.String)">
+ <summary>
+  Devuelve el valor de la columna en el registro actual
+ </summary>
+ <param name="columnName">El nombre de la columna</param>
+ <returns>El valor de la columna en el registro actual. Si falla devuelve FALSE</returns>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineQuery.ResultReader">
+ <summary>
+ Devuelve el DataTableReader de la consulta
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineQuery.SimpleSearch(System.String,helix.SQLEngineQuery.OperatorCriteria,System.Object,System.Object)">
+ <summary>
+ Agrega un query simple del formato COLUMNA operador VALOR [AND VALOR]
+ </summary>
+ <param name="column">Columna a buscar</param>
+ <param name="searchOperator">Operador a utilizar: =, !=...</param>
+ <param name="value">Valor a buscar</param>
+ <param name="valueEnd">Opcional cuando se usa BETWEEN</param>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineQuery.GenerateQuery(System.Boolean)">
+ <summary>
+ Genera una consulta SQL "SELECT" segun los parametros de la clase. Segun se escoja puede devolver una cadena para ser procesada por el SQLCore
+ o una cadena para depuracion
+ </summary>
+ <param name="toProcess">TRUE si la cadena va a ser procesada por SQLCore, FALSE si se usa como depuracion</param>
+ <returns>Una consulta SQL "SELECT"</returns>
+</member>
+<member name="M:helix.SQLEngineQuery.Reset">
+ <summary>
+ Reinicia la clase a sus valores originales
+ </summary>
+</member>
+<member name="M:helix.SQLEngineQuery.Query(System.Boolean,System.Data.DataTable@)">
+ <summary>
+ Ejecuta la consulta contra la base de datos
+ </summary>
+ <returns>El resultado de la consulta. TRUE si la consulta se realizo con exito, FALSE si fallo</returns>
+</member>
+<member name="P:helix.SQLEngineUpdate.LogFileFullName">
+ <summary>
+ Ruta completa y nombre de archivo donde se van a guardar los logs
+ </summary>
+ <value>Cadena con la ruta completa y el nombre de archivo del log</value>
+ <returns>La ruta y el nombre del archivo log</returns>
+ <remarks></remarks>
+</member>
+<member name="F:helix.SQLEngineUpdate._listOfUpdate">
+ <summary>
+ Lista de parametros Columna/Valor para ser insertados en la tabla
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:helix.SQLEngineUpdate.WHEREstring">
+ <summary>
+ Guarda o retorna la cadena con la clausula WHERE
+ </summary>
+ <returns>La cadena con la clausula WHERE actual</returns>
+</member>
+<member name="M:helix.SQLEngineUpdate.AddWHEREparam(System.Object)">
+ <summary>
+ Agrega un nuevo elemento a la lista de parametros WHERE
+ </summary>
+ <param name="param">Un objeto para ser usado posteriormente en un comando SQL</param>
+</member>
+<member name="M:helix.SQLEngineUpdate.p(System.Object)">
+ <summary>
+ Agrega un parametro a la lista de parametros. Para usar en la interpolación de WHEREString
+ </summary>
+ <param name="param">Un objeto para ser usado posteriormente en un comando SQL</param>
+ <returns>Retorna el caracter ? para ser usado en la construcción de la query</returns>
+</member>
+<member name="M:helix.SQLEngineUpdate.Reset">
+ <summary>
+ Reinicia la clase a sus valores originales
+ </summary>
+</member>
+<member name="M:helix.SQLEngineUpdate.SimpleSearch(System.String,helix.SQLEngineUpdate.OperatorCriteria,System.Object,System.Object)">
+ <summary>
+ Agrega un query simple del formato COLUMNA operador VALOR [AND VALOR]
+ </summary>
+ <param name="column">Columna a buscar</param>
+ <param name="searchOperator">Operador a utilizar: =, !=...</param>
+ <param name="value">Valor a buscar</param>
+ <param name="valueEnd">Opcional cuando se usa BETWEEN</param>
+ <remarks></remarks>
+</member>
+<member name="M:helix.SQLEngineUpdate.Update">
+ <summary>
+ Actualiza los registros de una tabla
+ </summary>
+ <returns>El estado de la operacion. TRUE si la operacion fue un exito, FALSE si fallo</returns>
+</member>
+<member name="M:helix.SQLEngineUpdate.GenerateQuery(System.Boolean)">
+ <summary>
+ Genera una consulta SQL "INSERT" segun los parametros de la clase. Segun se escoja puede devolver una cadena para ser procesada por el SQLCore
+ o una cadena para depuracion
+ </summary>
+ <param name="toProcess">TRUE si la cadena va a ser procesada por SQLCore, FALSE si se usa como depuracion</param>
+ <returns>Una consulta SQL "UPDATE"</returns>
+</member>
+</members>
+</doc>
