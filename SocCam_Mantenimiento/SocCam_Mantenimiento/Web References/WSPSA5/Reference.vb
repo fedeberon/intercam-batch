@@ -83,14 +83,14 @@ Namespace WSPSA5
         
         '''<remarks/>
         Public Event dummyCompleted As dummyCompletedEventHandler
-        
+
         '''<remarks/>
-        <System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace:="http://a5.soap.ws.server.puc.sr/", ResponseNamespace:="http://a5.soap.ws.server.puc.sr/", Use:=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle:=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)>  _
+        <System.Web.Services.Protocols.SoapDocumentMethodAttribute("", RequestNamespace:="http://a5.soap.ws.server.puc.sr/", ResponseNamespace:="http://a5.soap.ws.server.puc.sr/", Use:=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle:=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)>
         Public Function getPersona(<System.Xml.Serialization.XmlElementAttribute(Form:=System.Xml.Schema.XmlSchemaForm.Unqualified)> ByVal token As String, <System.Xml.Serialization.XmlElementAttribute(Form:=System.Xml.Schema.XmlSchemaForm.Unqualified)> ByVal sign As String, <System.Xml.Serialization.XmlElementAttribute(Form:=System.Xml.Schema.XmlSchemaForm.Unqualified)> ByVal cuitRepresentada As Long, <System.Xml.Serialization.XmlElementAttribute(Form:=System.Xml.Schema.XmlSchemaForm.Unqualified)> ByVal idPersona As Long) As <System.Xml.Serialization.XmlElementAttribute("personaReturn", Form:=System.Xml.Schema.XmlSchemaForm.Unqualified)> personaReturn
             Dim results() As Object = Me.Invoke("getPersona", New Object() {token, sign, cuitRepresentada, idPersona})
-            Return CType(results(0),personaReturn)
+            Return CType(results(0), personaReturn)
         End Function
-        
+
         '''<remarks/>
         Public Overloads Sub getPersonaAsync(ByVal token As String, ByVal sign As String, ByVal cuitRepresentada As Long, ByVal idPersona As Long)
             Me.getPersonaAsync(token, sign, cuitRepresentada, idPersona, Nothing)

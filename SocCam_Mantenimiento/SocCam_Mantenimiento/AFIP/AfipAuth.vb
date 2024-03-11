@@ -133,8 +133,6 @@ Public Class AfipAuth
         End With
     End Function
 
-
-
     Public Function LoadAll(ByRef dt As DataTable) As Boolean
         With sqle.Query
             .Reset()
@@ -144,8 +142,6 @@ Public Class AfipAuth
             Return .Query(True, dt)
         End With
     End Function
-
-
 
     Public Function Save(ByVal editMode As Guardar) As Boolean
         Select Case editMode

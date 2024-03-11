@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SocCam_Mantenimiento.exe" size="550912">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SocCam_Mantenimiento.exe" size="555008">
       <assemblyIdentity name="SocCam_Mantenimiento" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vkoWjabFb2Y8M7DKUc+HFrLtDda6UDqbrCvc77cAIqk=</dsig:DigestValue>
+        <dsig:DigestValue>SZHzJZAdrZaBO5rWbyCJ+GSzXo9CwmpSo0IrNYjj8y4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,7 +97,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2sdvHQ5NUSLjKnq2cfgpqkkQAdoX3NOKmi2wqxIlkM0=</dsig:DigestValue>
+        <dsig:DigestValue>BW5MlZppsdUULyI1D+z30MPG2xDAaBsOaSSAhcGegHQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

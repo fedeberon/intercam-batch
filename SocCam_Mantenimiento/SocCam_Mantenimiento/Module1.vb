@@ -9,6 +9,8 @@ Module Module1
 
     Public sqle As New SQLEngine
 
+    Dim ConsoleOut As New ConsoleOut
+
     Public Property LOG As Boolean = False
     Public Property LOG_DIR As String = ""
 
@@ -80,10 +82,16 @@ Module Module1
 
         If argParse.SW_CREAR_CUOTAS_SOCIALES Then
             If argParse.SW_NO_FACTURAR Then
+                'No genera el movimiento ni la factura.
                 Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_MES_VENCIDO, argParse.SW_CUOTA_AUTOCOBRAR, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE)
             Else
-                Dim homologacion As Boolean = argParse.PARAM_HOMOLOGACION
-                Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, homologacion, argParse.SW_CUOTA_EXTRA_IMPORTE, argParse.SW_CUOTA_EXTRA_SECTORES, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE, argParse.SW_SENDMAIL)
+                'Se genera cuota, recibo y movimiento. No se factura.
+
+                'Camara: envia mail.
+                'Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE, argParse.SW_SENDMAIL)
+
+                'DB Local: no enviar mail.
+                Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE)
             End If
         End If
     End Function

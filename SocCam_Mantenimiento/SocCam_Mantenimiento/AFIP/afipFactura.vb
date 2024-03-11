@@ -1,6 +1,8 @@
 ﻿Imports helix
 Public Class AfipFactura
 
+    Dim ConsoleOut As New ConsoleOut
+
     Public Enum Tipo As Integer
         TODOS = 0
         FACTURA_A = 1
@@ -1096,10 +1098,6 @@ Public Class AfipFactura
 
         Return res
     End Function
-
-
-
-
 
 End Class
 

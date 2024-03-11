@@ -1,26 +1,27 @@
 ﻿Imports System.IO
 Imports System.IO.Compression
+Imports System.Windows.Documents
 Imports System.Windows.Shapes
 Imports helix
 Imports SelectPdf
+Imports SocCam_Mantenimiento.WSPSA5
 
 Public Class Executor
-
     Public Property Silent As Boolean = False
-
+    Public Property globalConfig As New GlobalConfig()
+    Public Property config As New ConfigDatabase
     Public Property SqleGlobal As New SQLEngine
 
+    Dim ConsoleOut As New ConsoleOut
+
     Public Sub New()
-        SqleGlobal.dbType = helix.SQLEngine.dataBaseType.SQL_SERVER
-        SqleGlobal.DatabaseName = "soccam_test" 'Cambiar con el nombre de la DB correspondiente.
-        SqleGlobal.RequireCredentials = False
-        'SqleGlobal.Username = ""
-        'SqleGlobal.Password = 
+        Me.SqleGlobal = config.sqle
 
-        'Si la DB esta en tu equipo, no es necesario cambiar esta linea.
-        SqleGlobal.Path = My.Computer.Name & "\" & "SQLEXPRESS"
-
-        SqleGlobal.Start()
+        If SqleGlobal.IsStarted Then
+            Me.SqleGlobal.ColdBoot()
+        Else
+            Me.SqleGlobal.Start()
+        End If
     End Sub
 
     Public Function ActualizarPadronAfip(ByVal url As String) As Boolean
@@ -30,10 +31,7 @@ Public Class Executor
         End If
         Dim objProcess As System.Diagnostics.Process
 
-        Dim ConsoleOut As New ConsoleOut
-
         Try
-
             If Not Silent Then
                 ConsoleOut.Print($"- Descomprimiendo padron...")
             End If
@@ -64,23 +62,14 @@ Public Class Executor
 
         For Each foundFile As String In My.Computer.FileSystem.GetFiles(filePath,
     Microsoft.VisualBasic.FileIO.SearchOption.SearchAllSubDirectories, "*.tmp")
-            Dim sPadron As New SQLEngine
-            sPadron.dbType = helix.SQLEngine.dataBaseType.SQL_SERVER
-            sPadron.DatabaseName = "soccam_test" 'Cambiar con el nombre de la DB correspondiente.
-            sPadron.RequireCredentials = False
-            'sPadron.Username = ""
-            'sPadron.Password = 
 
-            'Si la DB esta en tu equipo, no es necesario cambiar esta linea.
-            sPadron.Path = My.Computer.Name & "\" & "SQLEXPRESS"
-
-            If Not sPadron.Start Then
+            If Not SqleGlobal.Start Then
                 If Not Silent Then
                     ConsoleOut.Print($"- Actualizar padron: No se pudo conectar a la base de datos [FAIL]")
                 End If
                 Return False
             End If
-            Dim tst As New AfipCondicionFiscal(sPadron)
+            Dim tst As New AfipCondicionFiscal(SqleGlobal)
 
             If tst.DeleteAll() Then
                 If Not Silent Then
@@ -103,51 +92,8 @@ Public Class Executor
         Dim dtSocios As New DataTable
         Dim dtrSocios As DataTableReader
         Dim ConsoleOut As New ConsoleOut
-        Dim sGC As New SQLEngine
 
-        Dim sSocios As New SQLEngine
-        Dim sTipo As New SQLEngine
-        Dim sCuota As New SQLEngine
-        Dim sSocio As New SQLEngine
-
-        sSocios.dbType = helix.SQLEngine.dataBaseType.SQL_SERVER
-        sSocios.DatabaseName = "soccam_test"
-        sSocios.RequireCredentials = False
-        'sSocios.Username = ""
-        'sSocios.Password = 
-
-        'Si la DB esta en tu equipo, no es necesario cambiar esta linea.
-        sSocios.Path = My.Computer.Name & "\" & "SQLEXPRESS"
-
-        ConsoleOut.Print($"sSocios.Path: {sSocios.Path}")
-        If Not sSocios.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            Return False
-        End If
-
-        sTipo = sSocios
-        If Not sTipo.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            Return False
-        End If
-
-        sCuota = sSocios
-        If Not sCuota.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            Return False
-        End If
-
-        sSocio = sSocios
-        If Not sSocio.Start Then
+        If Not SqleGlobal.Start Then
             If Not Silent Then
                 ConsoleOut.Print($"")
                 ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
@@ -166,7 +112,7 @@ Public Class Executor
             End If
         End If
 
-        If socios.LoadAll(sSocios, dtSocios, True) Then
+        If socios.LoadAll(SqleGlobal, dtSocios, True) Then
             dtrSocios = dtSocios.CreateDataReader
 
             If Not Silent Then
@@ -179,22 +125,22 @@ Public Class Executor
             While dtrSocios.Read
 
                 Dim currSocio As New Socio
-                currSocio.LoadMe(sSocio, dtrSocios(TABLA_SOCIO.ID))
+                currSocio.LoadMe(SqleGlobal, dtrSocios(TABLA_SOCIO.ID))
 
                 If Not Silent Then
                     ConsoleOut.Print($"{ConsoleOut.ProgressBarStep} {currentProcess}/{totalSocios} - {currSocio.Nombre.Trim.PadRight(80, " ")}")
                 End If
 
                 Dim plan As New SocioTipo
-                plan.sqle = sTipo
+                plan.sqle = SqleGlobal
                 plan.LoadMe(dtrSocios(TABLA_SOCIO.TIPO_SOCIO))
 
                 Dim periodo As Integer = GetPeriodoFromFecha(mes, plan.getMesesPorPeriodo)
 
                 Dim c As New CuotaSocio
-                c.sqle = sTipo
+                c.sqle = SqleGlobal
 
-                If Not c.CuotaExist(sCuota, periodo, plan.periodicidad, anio, dtrSocios(TABLA_SOCIO.ID)) Then
+                If Not c.CuotaExist(SqleGlobal, periodo, plan.periodicidad, anio, dtrSocios(TABLA_SOCIO.ID)) Then
 
                     If ((currSocio.FechaAceptacion.Month - 1) = periodo) And (currSocio.FechaAceptacion.Year = anio) Then
                         If currSocio.FechaAceptacion.Day <= 10 Then
@@ -209,7 +155,7 @@ Public Class Executor
                     c.monto = plan.importe
 
                     Dim cobrador As New Cobrador
-                    cobrador.LoadMe(sTipo, dtrSocios(TABLA_SOCIO.SECTOR), True)
+                    cobrador.LoadMe(SqleGlobal, dtrSocios(TABLA_SOCIO.SECTOR), True)
                     c.cobradorID = cobrador.ID
                     c.estado = CuotaSocio.ESTADO_SOCIO.PENDIENTE
                     c.socioID = dtrSocios(TABLA_SOCIO.ID)
@@ -217,7 +163,7 @@ Public Class Executor
                         c.estado = CuotaSocio.ESTADO_SOCIO.AL_DIA
                         c.fechaPago = Now
                     End If
-                    c.Save(sCuota, 0)
+                    c.Save(SqleGlobal, 0)
                 End If
 
                 currentProcess += 1
@@ -235,23 +181,12 @@ Public Class Executor
 
     Public Function GenerarCuotasSocios(ByVal mes As Integer,
                                         ByVal anio As Integer,
-                                        ByVal homologacion As Boolean,
-                                        ByVal extraCuota As Decimal,
-                                        ByVal extraSectores As String,
-                                        ByVal omitirUsuariosCofres As Boolean,
-                                        ByVal enviarFacturaPorMail As Boolean) As Boolean
+                                        ByVal omitirUsuariosCofres As Boolean) As Boolean
         Dim socios As New Socio
         Dim dtSocios As New DataTable
         Dim dtrSocios As DataTableReader
         Dim ConsoleOut As New ConsoleOut
-        Dim sGC As New SQLEngine
-
         Dim sSocios As New SQLEngine
-        Dim sTipo As New SQLEngine
-        Dim sCuota As New SQLEngine
-        Dim sSocio As New SQLEngine
-        Dim sCofre As New SQLEngine
-
         Dim log As New Log
         log.LogFilePath = Module1.LOG_DIR
 
@@ -259,23 +194,7 @@ Public Class Executor
             log.LogLevel = 2
         End If
 
-        sSocios.dbType = helix.SQLEngine.dataBaseType.SQL_SERVER
-        sSocios.DatabaseName = "soccam_test" 'Cambiar con el nombre de la DB correspondiente.
-        sSocios.RequireCredentials = False
-        'sSocios.Username = ""
-        'sSocios.Password =
-
-        'Si la DB esta en tu maquina, no es necesario cambiar esta linea.
-        sSocios.Path = My.Computer.Name & "\" & "SQLEXPRESS"
-
-        'If My.Computer.Name = "ALPHA" Then
-        '    sSocios.Path = My.Computer.Name
-        '    sSocios.DatabaseName = "soccam_ccb"
-        '    Silent = True
-
-        'End If
-
-        If Not sSocios.Start Then
+        If Not SqleGlobal.Start Then
             If Not Silent Then
                 ConsoleOut.Print($"")
                 ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
@@ -284,48 +203,15 @@ Public Class Executor
             Return False
         End If
 
-        sTipo = sSocios
-        If Not sTipo.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            log.SetError("Generacion de cuotas sociales [ FALLO ]: No se pudo iniciar el motor SQL tipo socios", "Executor", "sTipo.Start")
-            Return False
+
+        globalConfig.Sqle = SqleGlobal
+        If Not globalConfig.LoadMe(1) Then
+            ConsoleOut.Print("No se pudo cargar la configuraicon global")
         End If
 
-        sCuota = sSocios
-        If Not sCuota.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            log.SetError("Generacion de cuotas sociales [ FALLO ]: No se pudo iniciar el motor SQL cuotas socios", "Executor", "sCuota.Start")
-            Return False
-        End If
-
-        sSocio = sSocios
-        If Not sSocio.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            log.SetError("Generacion de cuotas sociales [ FALLO ]: No se pudo iniciar el motor SQL socio", "Executor", "sSocio.Start")
-            Return False
-        End If
-
-        sCofre = sSocios
-        If Not sCofre.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            log.SetError("Generacion de cuotas sociales [ FALLO ]: No se pudo iniciar el motor SQL cofres", "Executor", "sCofre.Start")
-            Return False
-        End If
 
         ' Buscar todos los socios activos
-        If socios.LoadAll(sSocios, dtSocios, True) Then
+        If socios.LoadAll(SqleGlobal, dtSocios, True) Then
             dtrSocios = dtSocios.CreateDataReader
 
             Dim totalSocios As Integer = dtSocios.Rows.Count - 1
@@ -335,49 +221,61 @@ Public Class Executor
             End If
 
             Dim currentProcess As Integer = 1
+
+            Dim desde As DateTime = Now.Date
+            Dim hoy As DateTime = DateTime.Today
+            Dim primerDiaDelProximoMes As DateTime = New DateTime(hoy.Year, hoy.Month, 1).AddMonths(1)
+            Dim ultimoDiaDelMesActual As DateTime = primerDiaDelProximoMes.AddDays(-1)
+            Dim hasta As DateTime = ultimoDiaDelMesActual
+            ConsoleOut.Print($"hasta: {hasta}")
+
+            ConsoleOut.Print($"Iterando Socios.")
             While dtrSocios.Read
                 Dim currSocio As New Socio
-                currSocio.LoadMe(sSocio, dtrSocios(TABLA_SOCIO.ID))
+                currSocio.LoadMe(SqleGlobal, dtrSocios(TABLA_SOCIO.ID))
+                ConsoleOut.Print($"Socio encontrado: {dtrSocios(TABLA_SOCIO.ID)}")
 
-
-                If Not Silent Then
-                    ConsoleOut.UpdateLastLine($"{ConsoleOut.ProgressBarStep} {currentProcess}/{totalSocios} - {currSocio.Nombre.Trim.PadRight(80, " ")}")
-                Else
-                    Debug.Print($"{ConsoleOut.ProgressBarStep} {currentProcess}/{totalSocios} - {currSocio.Nombre.Trim.PadRight(80, " ")}")
-                End If
+                'If Not Silent Then
+                '    ConsoleOut.UpdateLastLine($"{ConsoleOut.ProgressBarStep} {currentProcess}/{totalSocios} - {currSocio.Nombre.Trim.PadRight(80, " ")}")
+                'Else
+                '    Debug.Print($"{ConsoleOut.ProgressBarStep} {currentProcess}/{totalSocios} - {currSocio.Nombre.Trim.PadRight(80, " ")}")
+                'End If
 
                 If omitirUsuariosCofres Then
                     Dim tieneCofre As Boolean = False
-                    Dim contratoCofre As New ContratoCofre(sCofre)
-                    contratoCofre.QuickSearch(ContratoCofre.TABLA.ES_SOCIO_ID, SQLEngineQuery.OperatorCriteria.Igual, currSocio.InternalID)
+
+                    Dim contratoCofre As New ContratoCofre(SqleGlobal)
+                    contratoCofre.QuickSearch(ContratoCofre.TABLA.ES_SOCIO_ID, SQLEngineQuery.OperatorCriteria.Igual, dtrSocios(TABLA_SOCIO.ID))
 
                     If contratoCofre.SearchResult.Count > 0 Then
                         For Each contrato As ContratoCofre In contratoCofre.SearchResult
+
+                            'El If se ejecutará si y solo si contrato.Deleted = False.
                             If Not contrato.Deleted Then
                                 tieneCofre = True
                                 Exit For
                             End If
                         Next
-
                     End If
 
 
                     If tieneCofre Then
+                        ConsoleOut.Print($"Tiene cofre. Continua al siguiente socio.")
                         currentProcess += 1
                         Continue While
                     End If
                 End If
 
                 Dim plan As New SocioTipo
-                plan.sqle = sTipo
+                plan.sqle = SqleGlobal
                 plan.LoadMe(dtrSocios(TABLA_SOCIO.TIPO_SOCIO))
 
                 Dim c As New CuotaSocio
-                c.sqle = sTipo
+                c.sqle = SqleGlobal
 
                 Dim periodo As Integer = GetPeriodoFromFecha(mes, plan.getMesesPorPeriodo)
 
-                If Not c.CuotaExist(sCuota, periodo, plan.periodicidad, anio, dtrSocios(TABLA_SOCIO.ID)) Then
+                If Not c.CuotaExist(SqleGlobal, periodo, plan.periodicidad, anio, dtrSocios(TABLA_SOCIO.ID)) Then
 
                     If ((currSocio.FechaAceptacion.Month - 1) = periodo) And (currSocio.FechaAceptacion.Year = anio) Then
                         If currSocio.FechaAceptacion.Day <= 10 Then
@@ -388,58 +286,70 @@ Public Class Executor
                     c.anio = anio
                     c.Periodo = periodo
                     c.Periodicidad = plan.periodicidad
-
                     c.PlanID = plan.id
-
-
-
-                    Dim cobrador As New Cobrador
-                    cobrador.LoadMe(sTipo, dtrSocios(TABLA_SOCIO.SECTOR), True)
-
-                    If currSocio.Sector >= 1 And currSocio.Sector <= 7 Then
-                        c.monto = plan.importe + cobrador.ComisionFija
-                    Else
-                        c.monto = plan.importe
-                    End If
-
-                    'If My.Computer.Name = "ALPHA" And System.Diagnostics.Debugger.IsAttached Then Continue While
-
-                    c.cobradorID = cobrador.ID
+                    c.monto = plan.importe
+                    c.cobradorID = 1
                     c.estado = CuotaSocio.ESTADO_SOCIO.PENDIENTE
                     c.socioID = dtrSocios(TABLA_SOCIO.ID)
 
-                    ' GENERAR FACTURA AQUI
                     If c.monto = 0 Then
                         Debug.Print($"{currSocio.Apellido} {currSocio.Nombre}")
-                        c.Delete(sCuota, c.id)
+                        c.Delete(SqleGlobal, c.id)
                         Continue While
                     End If
-                    c.Save(sCuota, 0)
 
-                    Dim facturaID As Integer
-                    Dim feNum As Integer = GenerarFE(mes, anio, currSocio, homologacion, c.monto, c.id, enviarFacturaPorMail, facturaID)
-                    If feNum <> 0 Then
-                        Dim mov As New MovimientoCuentaCorrienteSocio(Me.SqleGlobal)
-                        mov.ClienteId = c.socioID
-                        mov.ComprobanteRelacionado = facturaID
-                        mov.ComprobanteTipo = MovimientoCuentaCorrienteSocio.TIPO.FACTURA_C
-                        mov.FechaIngreso = Utils.DateTo8601(Now.Date)
-                        mov.Importe = c.monto * -1
-                        mov.ImporteCobrar = mov.Importe
-                        mov.Save(MovimientoCuentaCorrienteSocio.Guardar.NUEVO)
+                    'Recibo -----------------------------------------------------------------------------------
+                    Dim lstDetalles As New List(Of AfipFacturaDetalle)
+                    Dim detalle As New AfipFacturaDetalle()
 
-                        c.observaciones = $"FC-{feNum}"
-                        c.MovimientoCC = mov.Id
-                        c.Save(sCuota, 1)
-                        mov.CuotasSociales.Add(c)
-                        mov.Save(MovimientoCuentaCorrienteSocio.Guardar.EDITAR)
-                    Else
-                        Debug.Print($"{currSocio.Apellido} {currSocio.Nombre}")
-                        log.SetError($"Generacion de factura [ FALLO ]: No se pudo facturar {currSocio.Apellido} {currSocio.Nombre} ", "Executor", "feNum")
-                        c.Delete(sCuota, c.id)
+                    Dim descripcion = $"Cuota social {Utils.GetNombreMes(periodo)} {Now.Year}"
+                    detalle.ProductoServicio = $"{descripcion}: <b>{Utils.ToMoneyFormat(c.monto)}</b>"
+                    detalle.Cantidad = 1
+                    detalle.UnidadMedida = AfipFacturaDetalle.Unidad.OTRAS_UNIDADES
+                    detalle.PrecioUnitario = c.monto
+                    detalle.Codigo = 0
+
+                    lstDetalles.Add(detalle)
+
+                    Dim Localidades As New Localidad
+                    Localidades.sqle = SqleGlobal
+                    Localidades.LoadAll()
+
+                    Dim numeroComprobante As Integer = 0
+                    Dim idComprobante As Integer = GenerarComprobante(AfipFactura.Tipo.RECIBO, c.socioID, lstDetalles, globalConfig, desde, hasta, Localidades, numeroComprobante)
+
+                    If idComprobante <= 0 Then
+                        Utils.Scream("No se pudo guardar el comprobante. Vuelva a intentar.")
                     End If
+                    'Recibo end -------------------------------------------------------------------------------
+
+                    c.observaciones = $"RX-{numeroComprobante}"
+                    c.Save(SqleGlobal, 0)
+
+                    'Movimiento -------------------------------------------------------------------------------
+                    Dim mov As New MovimientoCuentaCorrienteSocio(SqleGlobal)
+
+                    mov.ClienteId = c.socioID
+                    mov.ComprobanteRelacionado = idComprobante
+                    mov.ComprobanteTipo = MovimientoCuentaCorrienteSocio.TIPO.RECIBO_X
+                    mov.FechaIngreso = Utils.DateTo8601(Now.Date)
+                    mov.Importe = c.monto * -1
+                    mov.ImporteCobrar = mov.Importe
+                    mov.CuotasSociales.Add(c)
+
+                    mov.Save(MovimientoCuentaCorrienteSocio.Guardar.NUEVO)
+                    'Movimiento end ---------------------------------------------------------------------------
+
+
+                    'Else
+                    '    Debug.Print($"{currSocio.Apellido} {currSocio.Nombre}")
+                    '    log.SetError($"Generacion de factura [ FALLO ]: No se pudo facturar {currSocio.Apellido} {currSocio.Nombre} ", "Executor", "feNum")
+                    '    c.Delete(sCuota, c.id)
+                    'End If
+
                 End If
                 currentProcess += 1
+                ConsoleOut.Print(" ")
             End While
 
             If Not Silent Then
@@ -453,39 +363,30 @@ Public Class Executor
         Return False
     End Function
 
-    Private Sub GetDatosContribuyente(ByVal cuit As Long, ByVal globalConfig As GlobalConfig, ByRef razonSocial As String, ByRef domicilio As String)
+    Public Function GetDatosContribuyente(ByVal cuit As Long, ByVal globalConfig As GlobalConfig)
+        Dim log As New Log
+
         Dim afip As New Afip(globalConfig)
 
         Dim estadoErr As String = ""
-
         If Not afip.VerificarEstadoServicioPadron(estadoErr) Then
-            MsgBox(estadoErr, MsgBoxStyle.OkOnly + MsgBoxStyle.Exclamation, "Estado servicios AFIP")
-            Exit Sub
+            'log.SetError($"Verificar estado servicio padron [ FALLO ]: {estadoErr}", "Verificar estado servicio padron", "Afip")
+            ConsoleOut.Print("Error al verificar el estado del servicio del padron.")
+            Exit Function
         End If
 
-        Dim ConsoleOut As New ConsoleOut
-        Dim sAuth As New SQLEngine
-        sAuth.dbType = helix.SQLEngine.dataBaseType.SQL_SERVER
-        sAuth.DatabaseName = "soccam_test" 'Cambiar con el nombre de la DB correspondiente.
-        sAuth.RequireCredentials = False
-        'sAuth.Username = "prueba"
-        'sAuth.Password = 123456
-
-        'Si la DB esta en tu maquina, no es necesario cambiar esta linea.
-        sAuth.Path = My.Computer.Name & "\" & "SQLEXPRESS"
-
-        If Not sAuth.Start Then
+        If Not SqleGlobal.Start Then
             If Not Silent Then
                 ConsoleOut.Print($"")
                 ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
             End If
-            Exit Sub
+            Exit Function
         End If
 
-        Dim auth As New AfipAuth(sAuth)
+        Dim auth As New AfipAuth(SqleGlobal)
         Dim login As New AfipLogin(Afip.SERVICIO_PADRON, afip.AUTH_URL)
 
-        Dim cert As New AfipCert(sAuth)
+        Dim cert As New AfipCert(SqleGlobal)
         cert.Homologacion = afip.Homologacion
         auth.Homologacion = afip.Homologacion
 
@@ -493,7 +394,7 @@ Public Class Executor
             If Not auth.LoadActive(login.Serv, Now.Ticks) Then
                 Dim loginError As String = ""
                 If Not login.Login(cert.Certificado, loginError) Then
-                    Exit Sub
+                    Exit Function
                 Else
                     auth.Sign = login.Sign
                     auth.Token = login.Token
@@ -504,7 +405,7 @@ Public Class Executor
                     auth.Servicio = login.Serv
 
                     If Not auth.Save(AfipAuth.Guardar.NUEVO) Then
-                        Exit Sub
+                        Exit Function
                     End If
                 End If
             End If
@@ -514,210 +415,187 @@ Public Class Executor
         personaService.Url = afip.INFO_URL
 
         Dim cuitData As New WSPSA5.personaReturn
+        Dim condicionFiscal As String = String.Empty
+        Dim cuitRepresentada As String = "30528257921"
+
 
         Try
-            cuitData = personaService.getPersona(auth.Token, auth.Sign, globalConfig.Cuit, CLng(cuit))
-            If IsNothing(cuitData.datosRegimenGeneral) And IsNothing(cuitData.datosMonotributo) Then
-                razonSocial = ""
-                domicilio = ""
-            Else
-                If IsNothing(cuitData.datosGenerales.razonSocial) Then
-                    razonSocial = $"{cuitData.datosGenerales.apellido} {cuitData.datosGenerales.nombre}"
-                Else
-                    razonSocial = cuitData.datosGenerales.razonSocial
-                End If
-                domicilio = $"{cuitData.datosGenerales.domicilioFiscal.direccion} - {cuitData.datosGenerales.domicilioFiscal.localidad}, {cuitData.datosGenerales.domicilioFiscal.descripcionProvincia}"
-            End If
-        Catch ex As Exception
-            Debug.Print(ex.Message)
-        End Try
-    End Sub
+            cuitData = personaService.getPersona(auth.Token, auth.Sign, globalConfig.Cuit, cuit)
 
+            If Not IsNothing(cuitData) Then
 
-    Public Function GenerarFE(ByVal periodo As Integer, ByVal anio As Integer,
-                              ByVal socio As Socio,
-                              ByVal homologacion As Boolean,
-                              ByVal importe As Decimal,
-                              ByVal cuotaId As Integer,
-                              ByVal enviarPorMail As Boolean,
-                              Optional ByRef facturaID As Integer = 0) As Integer
-        Dim ConsoleOut As New ConsoleOut
+                If Not IsNothing(cuitData.datosMonotributo) Then
+                    If cuitData.datosMonotributo.categoriaMonotributo.descripcionCategoria = "A MONOTRIBUTO SOCIAL LOCACION" Or cuitData.datosMonotributo.categoriaMonotributo.descripcionCategoria = "A MONOTRIBUTO SOCIAL VENTAS" Then
+                        condicionFiscal = "Monotributista Social"
 
-        Dim sFe As New SQLEngine
-        Dim sFX As New SQLEngine
-        Dim sCF As New SQLEngine
-        Dim sGC As New SQLEngine
-
-        Dim log As New Log
-        log.LogFilePath = Module1.LOG_DIR
-
-        If Module1.LOG Then
-            log.LogLevel = 2
-        End If
-
-        sFe.dbType = helix.SQLEngine.dataBaseType.SQL_SERVER
-        sFe.DatabaseName = "soccam_test" 'Cambiar con el nombre de la DB correspondiente.
-        sFe.RequireCredentials = False
-        'sFe.Username = "prueba"
-        'sFe.Password = 123456
-
-        'Si la DB esta en tu maquina, no es necesario cambiar esta linea.
-        sFe.Path = My.Computer.Name & "\" & "SQLEXPRESS"
-
-        'sFe.Path = If(My.Computer.Name = "ALPHA", My.Computer.Name, My.Computer.Name & "\" & "SQLEXPRESS")
-        'sFe.DatabaseName = If(My.Computer.Name = "ALPHA", "soccam_ccb", "soccam")
-        If Not sFe.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            Return False
-        End If
-
-        sFX = sFe
-        If Not sFX.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            Return False
-        End If
-
-        sCF = sFe
-        If Not sCF.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            Return False
-        End If
-
-        sGC = sFe
-        If Not sGC.Start Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            Return False
-        End If
-
-        Dim FE As New AfipFactura(sFe)
-        Dim FEX As New AfipFacturaEX(sFX)
-        Dim FERender As New AfipFERenderer
-        Dim condicionFiscal As New AfipCondicionFiscal(sCF)
-
-
-        Dim globalConfig As New GlobalConfig(sGC)
-        If Not globalConfig.LoadMe(1) Then
-            If Not Silent Then
-                ConsoleOut.Print($"")
-                ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
-            End If
-            Return False
-        End If
-
-
-        FE.Homologacion = Not globalConfig.Produccion
-        FE.CuitEmisor = globalConfig.Cuit
-        FE.PuntoVenta = globalConfig.PuntoVenta
-        'FE.Numero = FE.GetUltimoNumeroLocal + 1
-        FE.Numero = FE.GetUltimoNumero + 1
-        If FE.Numero = 0 Then
-            Return 0
-        End If
-
-        FE.ComprobanteTipo = AfipFactura.Tipo.FACTURA_C
-        FE.FechaEmision = Utils.DateTo8601(Now.Date)
-
-        FE.Concept = AfipFactura.Concepto.SERVICIOS
-        FE.FechaServicioDesde = Utils.GetPrimerDiaMesISO(periodo, anio)
-        FE.FechaServicioHasta = Utils.GetUltimoDiaMesISO(periodo, anio)
-        FE.FechaVencimientoPago = Utils.GetUltimoDiaMesISO(Now.Month - 1, Now.Year)
-
-        FE.Moneda = AfipFactura.MONEDA_PESO
-        FE.MonedaCotizacion = 1
-
-        condicionFiscal.LoadMe(FE.CuitEmisor.ToString)
-        FEX.DomicilioEmisor = globalConfig.DomicilioComercial
-
-        ' Cambiar la razon social para otros clientes
-        FEX.RazonSocialEmisor = "CAMARA COMERCIAL E INDUSTRIAL DE BOLIVAR"
-
-        Dim razonSocial As String = ""
-        Dim domicilio As String = ""
-
-        If socio.CUIT.Trim.Length = 11 Then
-            FE.DocumentoTipo = AfipFactura.Documento.CUIT
-            FE.DocumentoNumero = CLng(socio.CUIT)
-            GetDatosContribuyente(socio.CUIT, globalConfig, razonSocial, domicilio)
-            If razonSocial = "" Then
-                Try
-                    If socio.DNI.Trim.Length >= 6 Then
-                        FE.DocumentoTipo = AfipFactura.Documento.DNI
-                        FE.DocumentoNumero = CLng(socio.DNI)
                     Else
-                        Return 0
+
+                        For Each impuesto As impuesto In cuitData.datosMonotributo.impuesto
+                            Dim descripcion As String = impuesto.descripcionImpuesto
+
+                            If descripcion = "MONOTRIBUTO" Then
+                                condicionFiscal = "Responsable Monotributo"
+                                Exit For
+                            End If
+                        Next
+
                     End If
-                Catch ex As Exception
-                    Return 0
-                End Try
-                FEX.RazonSocialReceptor = $"{socio.Apellido} {socio.Nombre}"
-                FEX.CondicionFiscalStringReceptor = "Consumidor Final"
-                FEX.DomicilioReceptor = socio.Domicilio
-            Else
-                FEX.RazonSocialReceptor = razonSocial
-                condicionFiscal.LoadMe(socio.CUIT)
-                FEX.CondicionFiscalStringReceptor = GetCondicionFiscalString(condicionFiscal.Condicion)
-                FEX.DomicilioReceptor = domicilio
-            End If
-        Else
-            FE.DocumentoTipo = AfipFactura.Documento.DNI
-            FE.DocumentoNumero = CLng(socio.DNI)
-            FEX.RazonSocialReceptor = $"{socio.Apellido} {socio.Nombre}"
-            FEX.CondicionFiscalStringReceptor = "Consumidor Final"
-            FEX.DomicilioReceptor = socio.Domicilio
-        End If
 
+                ElseIf Not IsNothing(cuitData.datosRegimenGeneral) Then
 
-        FEX.CondicionContado = True
+                    For Each impuesto As impuesto In cuitData.datosRegimenGeneral.impuesto
+                        Dim descripcion As String = impuesto.descripcionImpuesto
 
+                        If descripcion = "IVA EXENTO" Then
+                            condicionFiscal = "IVA Sujeto Exento"
+                            Exit For
+                        ElseIf descripcion = "IVA" Then
+                            condicionFiscal = "IVA Responsable Inscripto"
+                            Exit For
+                        End If
+                    Next
 
-        Dim totalFactura As Decimal = 0
-
-        Dim det As New AfipFacturaDetalle
-        det.Codigo = "0"
-        det.ProductoServicio = $"Cuota social {periodo + 1}/{anio}"
-        det.Cantidad = 1
-        det.UnidadMedida = AfipFacturaDetalle.Unidad.OTRAS_UNIDADES
-        det.PrecioUnitario = importe
-        det.BonificacionPercent = 0
-        det.CuotaId = cuotaId
-
-        totalFactura += (det.PrecioUnitario * det.Cantidad) - ((det.PrecioUnitario * det.Cantidad) * det.BonificacionPercent) / 100
-        FE.Detalles.Add(det)
-
-        FE.ImporteTotal = totalFactura
-        FE.ImporteNeto = FE.ImporteTotal
-
-        Dim numeroFE As Integer = 0
-
-        If FE.Autorizar Then
-            FE.Save(AfipFactura.Guardar.NUEVO)
-            FEX.FacturaId = FE.Id
-            facturaID = FE.Id
-            FEX.Save(AfipFacturaEX.Guardar.NUEVO)
-            FEX.FacturaRendered = FERender.templateFE(FE, FEX, globalConfig)
-            numeroFE = FE.Numero
-
-            If enviarPorMail Then
-                If socio.EnviarMail And My.Computer.Name <> "ALPHA" Then
-                    EnviarFacturaMailAuto(1, socio.InternalID, numeroFE, globalConfig, homologacion, FEX.FacturaRendered)
+                Else
+                    condicionFiscal = "Consumidor Final"
                 End If
-            End If
-        End If
 
-        Return numeroFE
+            End If
+
+            Return condicionFiscal
+
+        Catch ex As Exception
+            'log.SetError($"Comprobar condicion fiscal contribuyente [ FALLO ]: {ex}", "Comprobar condicion fiscal contribuyente", "Afip")
+            ConsoleOut.Print("Error al verificar la condicion fiscal del socio.")
+        End Try
     End Function
+
+    'Public Function GenerarFE(ByVal periodo As Integer, ByVal anio As Integer,
+    '                          ByVal socio As Socio,
+    '                          ByVal homologacion As Boolean,
+    '                          ByVal importe As Decimal,
+    '                          ByVal cuotaId As Integer,
+    '                          ByVal enviarPorMail As Boolean,
+    '                          Optional ByRef facturaID As Integer = 0) As Integer
+
+    '    Dim ConsoleOut As New ConsoleOut
+
+    '    Dim log As New Log
+    '    log.LogFilePath = Module1.LOG_DIR
+
+    '    If Module1.LOG Then
+    '        log.LogLevel = 2
+    '    End If
+
+    '    Dim FE As New AfipFactura(SqleGlobal)
+    '    Dim FEX As New AfipFacturaEX(SqleGlobal)
+    '    Dim FERender As New AfipFERenderer
+    '    Dim condicionFiscal As New AfipCondicionFiscal(SqleGlobal)
+
+
+    '    Dim globalConfig As New GlobalConfig(SqleGlobal)
+    '    If Not globalConfig.LoadMe(1) Then
+    '        If Not Silent Then
+    '            ConsoleOut.Print($"")
+    '            ConsoleOut.Print($"- Generacion de cuotas sociales [ FALLO ]")
+    '        End If
+    '        Return False
+    '    End If
+
+
+    '    FE.Homologacion = Not globalConfig.Produccion
+    '    FE.CuitEmisor = globalConfig.Cuit
+    '    FE.PuntoVenta = globalConfig.PuntoVenta
+    '    FE.Numero = FE.GetUltimoNumero + 1
+    '    If FE.Numero = 0 Then
+    '        Return 0
+    '    End If
+
+    '    FE.ComprobanteTipo = AfipFactura.Tipo.FACTURA_C
+    '    FE.FechaEmision = Utils.DateTo8601(Now.Date)
+    '    FE.Concept = AfipFactura.Concepto.SERVICIOS
+    '    FE.FechaServicioDesde = Utils.GetPrimerDiaMesISO(periodo, anio)
+    '    FE.FechaServicioHasta = Utils.GetUltimoDiaMesISO(periodo, anio)
+    '    FE.FechaVencimientoPago = Utils.GetUltimoDiaMesISO(Now.Month - 1, Now.Year)
+    '    FE.Moneda = AfipFactura.MONEDA_PESO
+    '    FE.MonedaCotizacion = 1
+
+    '    condicionFiscal.LoadMe(FE.CuitEmisor.ToString)
+    '    FEX.DomicilioEmisor = globalConfig.DomicilioComercial
+    '    FEX.RazonSocialEmisor = "CAMARA COMERCIAL E INDUSTRIAL DE BOLIVAR"
+
+    '    Dim razonSocial As String = ""
+    '    Dim domicilio As String = ""
+
+    '    If socio.CUIT.Trim.Length = 11 Then
+    '        FE.DocumentoTipo = AfipFactura.Documento.CUIT
+    '        FE.DocumentoNumero = CLng(socio.CUIT)
+    '        GetDatosContribuyente(socio.CUIT, globalConfig, razonSocial, domicilio)
+    '        If razonSocial = "" Then
+    '            Try
+    '                If socio.DNI.Trim.Length >= 6 Then
+    '                    FE.DocumentoTipo = AfipFactura.Documento.DNI
+    '                    FE.DocumentoNumero = CLng(socio.DNI)
+    '                Else
+    '                    Return 0
+    '                End If
+    '            Catch ex As Exception
+    '                Return 0
+    '            End Try
+    '            FEX.RazonSocialReceptor = $"{socio.Apellido} {socio.Nombre}"
+    '            FEX.CondicionFiscalStringReceptor = "Consumidor Final"
+    '            FEX.DomicilioReceptor = socio.Domicilio
+    '        Else
+    '            FEX.RazonSocialReceptor = razonSocial
+    '            condicionFiscal.LoadMe(socio.CUIT)
+    '            FEX.CondicionFiscalStringReceptor = GetCondicionFiscalString(condicionFiscal.Condicion)
+    '            FEX.DomicilioReceptor = domicilio
+    '        End If
+    '    Else
+    '        FE.DocumentoTipo = AfipFactura.Documento.DNI
+    '        FE.DocumentoNumero = CLng(socio.DNI)
+    '        FEX.RazonSocialReceptor = $"{socio.Apellido} {socio.Nombre}"
+    '        FEX.CondicionFiscalStringReceptor = "Consumidor Final"
+    '        FEX.DomicilioReceptor = socio.Domicilio
+    '    End If
+
+    '    FEX.CondicionContado = True
+
+    '    Dim totalFactura As Decimal = 0
+
+    '    Dim det As New AfipFacturaDetalle
+    '    det.Codigo = "0"
+    '    det.ProductoServicio = $"Cuota social {periodo + 1}/{anio}"
+    '    det.Cantidad = 1
+    '    det.UnidadMedida = AfipFacturaDetalle.Unidad.OTRAS_UNIDADES
+    '    det.PrecioUnitario = importe
+    '    det.BonificacionPercent = 0
+    '    det.CuotaId = cuotaId
+
+    '    totalFactura += (det.PrecioUnitario * det.Cantidad) - ((det.PrecioUnitario * det.Cantidad) * det.BonificacionPercent) / 100
+    '    FE.Detalles.Add(det)
+
+    '    FE.ImporteTotal = totalFactura
+    '    FE.ImporteNeto = FE.ImporteTotal
+
+    '    Dim numeroFE As Integer = 0
+
+    '    If FE.Autorizar Then
+    '        FE.Save(AfipFactura.Guardar.NUEVO)
+    '        FEX.FacturaId = FE.Id
+    '        facturaID = FE.Id
+    '        FEX.Save(AfipFacturaEX.Guardar.NUEVO)
+    '        FEX.FacturaRendered = FERender.templateFE(FE, FEX, globalConfig)
+    '        numeroFE = FE.Numero
+
+    '        If enviarPorMail Then
+    '            If socio.EnviarMail And My.Computer.Name <> "ALPHA" Then
+    '                EnviarFacturaMailAuto(1, socio.InternalID, numeroFE, globalConfig, homologacion, FEX.FacturaRendered)
+    '            End If
+    '        End If
+    '    End If
+
+    '    Return numeroFE
+    'End Function
 
 
     Public Function GetPeriodoFromFecha(ByVal mes As Integer, ByVal mesesPorPeriodo As Byte) As Integer
@@ -908,8 +786,100 @@ Public Class Executor
         Return lstMails
     End Function
 
-    Public Function ActualizarEstadoCuotasCofres() As Integer
+    ''' <summary>
+    ''' Generar un comprobante por los detalles del movimiento
+    ''' </summary>
+    ''' <param name="tipoComprobante">Factura o recibo</param>
+    ''' <param name="socioID">ID del socio a generar el comprobante</param>
+    ''' <param name="detalles">Listado de detalles del comprobante</param>
+    ''' <param name="gc">Configuración global</param>
+    ''' <param name="localidades">Lista de localidades</param>
+    ''' <returns>Id del comprobante generado si se generó correctamente, entero menor a 0 si falló</returns>
+    ''' GenerarComprobante(AfipFactura.Tipo.RECIBO, c.socioID, lstDetalles, globalConfig, desde, hasta, , numeroComprobante)
+    Public Function GenerarComprobante(ByVal tipoComprobante As AfipFactura.Tipo,
+                                       socioID As Integer,
+                                       ByVal detalles As List(Of AfipFacturaDetalle),
+                                       ByVal gc As GlobalConfig,
+                                       ByVal periodoDesde As Date,
+                                       ByVal periodoHasta As Date,
+                                       Optional localidades As Localidad = Nothing,
+                                       Optional ByRef numeroComprobante As Integer = 0,
+                                       Optional ByRef comprobanteRelacionado As AfipFactura = Nothing) As Integer
 
+        Dim fact As New AfipFactura(SqleGlobal)
+        fact.Homologacion = False
+        fact.CuitEmisor = "30528257921"
+        fact.PuntoVenta = 4
+        fact.ComprobanteTipo = tipoComprobante
+
+        Dim ultimoNumero = fact.GetUltimoNumeroLocal
+        If ultimoNumero < 0 Then Return -1
+
+        For Each det As AfipFacturaDetalle In detalles
+            fact.Detalles.Add(det)
+            fact.ImporteTotal += det.PrecioUnitario * det.Cantidad
+            fact.ImporteNeto += det.PrecioUnitario * det.Cantidad
+        Next
+
+        fact.Numero = ultimoNumero + 1
+        fact.Concept = AfipFactura.Concepto.SERVICIOS
+
+        Dim socio As New SocioNT(SqleGlobal)
+        If Not socio.LoadMe(socioID) Then Return -2
+
+        If IsNumeric(socio.Cuit) Then
+            fact.DocumentoNumero = socio.Cuit
+            fact.DocumentoTipo = AfipFactura.Documento.CUIT
+        Else
+            If IsNumeric(socio.Dni) Then
+                fact.DocumentoNumero = socio.Dni
+                fact.DocumentoTipo = AfipFactura.Documento.DNI
+            Else
+                fact.DocumentoNumero = 99999999
+                fact.DocumentoTipo = AfipFactura.Documento.DNI
+            End If
+        End If
+
+        fact.FechaEmision = Utils.DateTo8601(Now.Date)
+        fact.FechaServicioDesde = Utils.DateTo8601(periodoDesde)
+        fact.FechaServicioHasta = Utils.DateTo8601(periodoHasta)
+        fact.FechaVencimiento = Utils.DateTo8601(Now.Date.AddDays(1))
+
+        Dim fechaActual As Date = Now.Date
+
+        ' Establecer la fecha de vencimiento al día 10 del mes actual
+        Dim fechaVencimiento As Date = New Date(fechaActual.Year, fechaActual.Month, 10)
+
+        ' Convertir la fecha de vencimiento al formato deseado (si es necesario)
+        fact.FechaVencimientoPago = Utils.DateTo8601(fechaVencimiento)
+
+        If Not fact.Save(AfipFactura.Guardar.NUEVO) Then Return -4
+
+
+        Dim fx As New AfipFacturaEX(SqleGlobal)
+        fx.FacturaId = fact.Id
+        fx.CondicionContado = True
+
+        'fx.CondicionFiscalStringReceptor = GetCondicionFiscalString(socio.CondicionFiscal)
+
+        If Not IsNumeric(socio.Cuit) Then
+            fx.CondicionFiscalStringReceptor = "Consumidor Final"
+        Else
+            fx.CondicionFiscalStringReceptor = GetDatosContribuyente(socio.Cuit, gc)
+        End If
+
+        fx.DomicilioEmisor = "Las Heras 45 - Bolivar, Buenos Aires"
+        fx.DomicilioReceptor = $"{ToSentenceCase(socio.Domicilio)} - {localidades.AllReverse(socio.Localidad).Split(",")(0)}, {localidades.AllReverse(socio.Localidad).Split(",")(2)}"
+        fx.Operador = "0"
+        fx.PuestoEmision = "PCADMIN"
+        fx.RazonSocialEmisor = "CAMARA COMERCIAL E INDUSTRIAL DE BOLIVAR"
+        fx.RazonSocialReceptor = socio.Nombre
+        fx.Pagado = False
+        fx.Save()
+
+        numeroComprobante = fact.Numero
+
+        Return fact.Id
     End Function
 
 End Class

@@ -11,6 +11,9 @@ Public Class MovimientoCuentaCorrienteSocio
     End Enum
 
     Public Property Sqle As New SQLEngine
+
+    Dim ConsoleOut As New ConsoleOut
+
     Public ReadOnly Property SearchResult As New List(Of MovimientoCuentaCorrienteSocio)
 
     ' Listado de productos contenidos en el movimiento
@@ -173,53 +176,123 @@ Public Class MovimientoCuentaCorrienteSocio
         End With
     End Function
 
+    ''' <summary>
+    ''' Genera una cuota social
+    ''' </summary>
+    ''' <param name="detalle">Detalle</param>
+    ''' <param name="idMovimiento"></param>
+    ''' <returns>El ID de la cuota</returns>
+    Public Function GenerarCuotaSocial(ByVal detalle As DetalleCCSocio, ByVal socioID As Integer, Optional ByVal idMovimiento As Integer = 0) As Integer
 
+        Dim cuota As New CuotaSocio()
 
+        If detalle.ListadoCuotasSocialesVirtuales.Count > 0 Then
+            cuota = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota)
+            cuota.anio = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).anio
+            cuota.cobradorID = 1
+            cuota.estado = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).estado
+            cuota.fechaPago = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).fechaPago
+            cuota.monto = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).monto
+            cuota.MovimientoCC = idMovimiento
+            cuota.observaciones = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).observaciones
+            cuota.Operacion = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).Operacion
+            cuota.Periodicidad = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).Periodicidad
+            cuota.Periodo = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).Periodo
+            cuota.PlanID = detalle.ListadoCuotasSocialesVirtuales(detalle.IdCuota).PlanID
+            cuota.socioID = socioID
+
+            If Not cuota.CuotaExist(Me.Sqle, cuota.Periodo, cuota.Periodicidad, cuota.anio, cuota.socioID) Then
+                Return cuota.Save(Me.Sqle, 0)
+            End If
+        End If
+
+        Return -1
+    End Function
+
+    ''' <summary>
+    ''' Carga un producto de socio según el detalle
+    ''' </summary>
+    ''' <param name="detalle">Detalle del producto</param>
+    ''' <param name="socioID">ID del socio a guardar</param>
+    ''' <param name="idMovimiento">ID del movimiento de CC que lo genera</param>
+    ''' <returns></returns>
+    Public Function CargarProductoSocio(ByVal detalle As DetalleCCSocio, ByVal socioID As Integer, Optional ByVal idMovimiento As Integer = 0) As Integer
+
+        Dim prod As New ProductoSocio(Me.Sqle)
+
+        prod.SocioId = socioID
+        prod.Descripcion = detalle.Descripcion
+
+        Select Case detalle.Tipo
+            Case DetalleCCSocio.TipoDeMovimiento.SOCIOS_OTROS
+                prod.Tipo = ProductoSocio.Producto_tipo.OTROS
+            Case DetalleCCSocio.TipoDeMovimiento.SOCIOS_PUBLICIDAD
+                prod.Tipo = ProductoSocio.Producto_tipo.PUBLICIDAD
+            Case DetalleCCSocio.TipoDeMovimiento.SOCIOS_BOLSIN
+                prod.Tipo = ProductoSocio.Producto_tipo.BOLSIN
+            Case DetalleCCSocio.TipoDeMovimiento.SOCIOS_MEDICINA
+                prod.Tipo = ProductoSocio.Producto_tipo.MEDICINA_LABORAL
+        End Select
+
+        prod.Importe = detalle.Importe
+        prod.Movimiento_cc = idMovimiento
+
+        If prod.Save(ProductoSocio.Guardar.NUEVO) Then
+            Return prod.Id
+        End If
+
+        Return -1
+    End Function
 
     Public Function Save(ByVal editMode As Guardar) As Boolean
-        Select Case editMode
-            Case 0
-                With Sqle.Insert
-                    .Reset()
-                    .TableName = TABLA.TABLA_NOMBRE
-                    .AddColumnValue(TABLA.CLIENTE_ID, ClienteId)
-                    .AddColumnValue(TABLA.FECHA_INGRESO, FechaIngreso)
-                    .AddColumnValue(TABLA.TIPO_MOVIMIENTO, TipoMovimiento)
-                    .AddColumnValue(TABLA.COMPROBANTE_RELACIONADO, ComprobanteRelacionado)
-                    .AddColumnValue(TABLA.COMPROBANTE_TIPO, ComprobanteTipo)
-                    .AddColumnValue(TABLA.IMPORTE, Importe)
-                    .AddColumnValue(TABLA.IMPORTE_COBRAR, ImporteCobrar)
-                    .AddColumnValue(TABLA.PROCESADO, Procesado)
-                    .AddColumnValue(TABLA.DELETED, Deleted)
-                    .AddColumnValue(TABLA.MODIFICADO, Now)
-                    Dim lastID As Integer = 0
-                    If .Insert(lastID) Then
-                        Id = lastID
-                        Return True
-                    Else
-                        Return False
-                    End If
-                End With
-            Case 1
-                With Sqle.Update
-                    .Reset()
-                    .TableName = TABLA.TABLA_NOMBRE
-                    .AddColumnValue(TABLA.CLIENTE_ID, ClienteId)
-                    .AddColumnValue(TABLA.FECHA_INGRESO, FechaIngreso)
-                    .AddColumnValue(TABLA.TIPO_MOVIMIENTO, TipoMovimiento)
-                    .AddColumnValue(TABLA.COMPROBANTE_RELACIONADO, ComprobanteRelacionado)
-                    .AddColumnValue(TABLA.COMPROBANTE_TIPO, ComprobanteTipo)
-                    .AddColumnValue(TABLA.IMPORTE, Importe)
-                    .AddColumnValue(TABLA.IMPORTE_COBRAR, ImporteCobrar)
-                    .AddColumnValue(TABLA.PROCESADO, Procesado)
-                    .AddColumnValue(TABLA.DELETED, Deleted)
-                    .AddColumnValue(TABLA.MODIFICADO, Now)
-                    .SimpleSearch(TABLA.ID, SQLEngineQuery.OperatorCriteria.Igual, Id)
-                    Return .Update
-                End With
-            Case Else
-                Return False
-        End Select
+        Try
+            Select Case editMode
+                Case 0
+                    With Sqle.Insert
+                        .Reset()
+                        .TableName = TABLA.TABLA_NOMBRE
+                        .AddColumnValue(TABLA.CLIENTE_ID, ClienteId)
+                        .AddColumnValue(TABLA.FECHA_INGRESO, FechaIngreso)
+                        .AddColumnValue(TABLA.TIPO_MOVIMIENTO, TipoMovimiento)
+                        .AddColumnValue(TABLA.COMPROBANTE_RELACIONADO, ComprobanteRelacionado)
+                        .AddColumnValue(TABLA.COMPROBANTE_TIPO, ComprobanteTipo)
+                        .AddColumnValue(TABLA.IMPORTE, Importe)
+                        .AddColumnValue(TABLA.IMPORTE_COBRAR, ImporteCobrar)
+                        .AddColumnValue(TABLA.PROCESADO, Procesado)
+                        .AddColumnValue(TABLA.DELETED, Deleted)
+                        .AddColumnValue(TABLA.MODIFICADO, Now)
+                        Dim lastID As Integer = 0
+                        If .Insert(lastID) Then
+                            Id = lastID
+                            Return True
+                        Else
+                            Return False
+                        End If
+                    End With
+                Case 1
+                    ConsoleOut.Print("Case 1 mov.save")
+                    With Sqle.Update
+                        .Reset()
+                        .TableName = TABLA.TABLA_NOMBRE
+                        .AddColumnValue(TABLA.CLIENTE_ID, ClienteId)
+                        .AddColumnValue(TABLA.FECHA_INGRESO, FechaIngreso)
+                        .AddColumnValue(TABLA.TIPO_MOVIMIENTO, TipoMovimiento)
+                        .AddColumnValue(TABLA.COMPROBANTE_RELACIONADO, ComprobanteRelacionado)
+                        .AddColumnValue(TABLA.COMPROBANTE_TIPO, ComprobanteTipo)
+                        .AddColumnValue(TABLA.IMPORTE, Importe)
+                        .AddColumnValue(TABLA.IMPORTE_COBRAR, ImporteCobrar)
+                        .AddColumnValue(TABLA.PROCESADO, Procesado)
+                        .AddColumnValue(TABLA.DELETED, Deleted)
+                        .AddColumnValue(TABLA.MODIFICADO, Now)
+                        .SimpleSearch(TABLA.ID, SQLEngineQuery.OperatorCriteria.Igual, Id)
+                        Return .Update
+                    End With
+                Case Else
+                    Return False
+            End Select
+        Catch ex As Exception
+            ConsoleOut.Print("Error al guardar la cuota: " & ex.Message)
+        End Try
     End Function
 
     Public Function Delete(Optional ByVal hard As Boolean = False) As Boolean

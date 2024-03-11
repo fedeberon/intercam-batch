@@ -21,11 +21,14 @@ Public Class GlobalConfig
     Public Property Produccion As Boolean = False
     Public Property Deleted As Boolean = False
     Public Property Modificado As Date = Now
+    Public Property UsuarioId As Integer = 0
+    Public Property NombrePuesto As String = ""
+    Public Property RazonSocialEmisor As String = "CAMARA COMERCIAL E INDUSTRIAL DE BOLIVAR"
+
     Public Enum Guardar
         NUEVO = 0
         EDITAR = 1
     End Enum
-
 
     Public Structure TABLA
         Const TABLA_NOMBRE As String = "GlobalConfig"
