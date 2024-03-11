@@ -5,6 +5,8 @@ Imports helix
 
 Module HelperMod
 
+    Dim ConsoleOut As New ConsoleOut
+
     ' Public Const SQL_PASS As String = "jqW8lU1uPWoV"
     ' Public Const SQL_USER As String = "sa"
 

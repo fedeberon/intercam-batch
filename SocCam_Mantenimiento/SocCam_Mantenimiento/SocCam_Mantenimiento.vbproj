@@ -127,6 +127,7 @@
     <Compile Include="AFIP\afipLogin.vb" />
     <Compile Include="AFIP\AfipQREncoder.vb" />
     <Compile Include="AFIP\GlobalConfig.vb" />
+    <Compile Include="AFIP\Localidad.vb" />
     <Compile Include="AFIP\TemplateLoader.vb" />
     <Compile Include="ArgsParser.vb" />
     <Compile Include="Campania.vb" />
@@ -137,6 +138,7 @@
     <Compile Include="DetalleCCSocio.vb" />
     <Compile Include="Executor.vb" />
     <Compile Include="HelperMod.vb" />
+    <Compile Include="Helper\ConfigDatabase.vb" />
     <Compile Include="Log.vb" />
     <Compile Include="Mail.vb" />
     <Compile Include="MailTemplate.vb" />
@@ -334,5 +336,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

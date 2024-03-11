@@ -79,7 +79,7 @@ Public Class ArgsParser
                             End If
 
                         Case 2
-                            'Se comentaron estas líneas para evitar cobro extra.
+                            'Se comentaron las líneas de SW_CUOTA_EXTRA para evitar cobro extra.
                             'Anteriormente la camara enviaba cobradores por zona a los socios y eso era un cargo extra.
                             Select Case arg.ToLower
                                 Case "ccb"
@@ -199,7 +199,7 @@ Public Class ArgsParser
                         End If
 
                     Case 2
-                        'Se comentaron estas líneas para evitar cobro extra.
+                        'Se comentaron las líneas de SW_CUOTA_EXTRA para evitar cobro extra.
                         'Anteriormente la camara enviaba cobradores por zona a los socios y eso era un cargo extra.
                         Select Case arg.ToLower
                             Case "ccb"

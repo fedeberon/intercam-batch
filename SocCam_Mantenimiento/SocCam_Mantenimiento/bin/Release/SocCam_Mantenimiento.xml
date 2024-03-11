@@ -212,6 +212,18 @@ SocCam_Mantenimiento
  </param>
  <returns></returns>
 </member>
+<member name="M:SocCam_Mantenimiento.Executor.GenerarComprobante(SocCam_Mantenimiento.AfipFactura.Tipo,System.Int32,System.Collections.Generic.List{SocCam_Mantenimiento.AfipFacturaDetalle},SocCam_Mantenimiento.GlobalConfig,System.DateTime,System.DateTime,SocCam_Mantenimiento.Localidad,System.Int32@,SocCam_Mantenimiento.AfipFactura@)">
+ <summary>
+ Generar un comprobante por los detalles del movimiento
+ </summary>
+ <param name="tipoComprobante">Factura o recibo</param>
+ <param name="socioID">ID del socio a generar el comprobante</param>
+ <param name="detalles">Listado de detalles del comprobante</param>
+ <param name="gc">Configuración global</param>
+ <param name="localidades">Lista de localidades</param>
+ <returns>Id del comprobante generado si se generó correctamente, entero menor a 0 si falló</returns>
+ GenerarComprobante(AfipFactura.Tipo.RECIBO, c.socioID, lstDetalles, globalConfig, desde, hasta, , numeroComprobante)
+</member>
 <member name="M:SocCam_Mantenimiento.HelperMod.DebugList(System.Int32,System.Int32,System.Object,System.String)">
  <summary>
  Rutina que ayuda a ver que valor se va a cargar en el subitem de un ListItem
@@ -397,6 +409,23 @@ SocCam_Mantenimiento
  El id del comprobante de la operación
  </summary>
  <returns>El id del recibo / factura si es debe, el ID de operación si es pago</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.MovimientoCuentaCorrienteSocio.GenerarCuotaSocial(SocCam_Mantenimiento.DetalleCCSocio,System.Int32,System.Int32)">
+ <summary>
+ Genera una cuota social
+ </summary>
+ <param name="detalle">Detalle</param>
+ <param name="idMovimiento"></param>
+ <returns>El ID de la cuota</returns>
+</member>
+<member name="M:SocCam_Mantenimiento.MovimientoCuentaCorrienteSocio.CargarProductoSocio(SocCam_Mantenimiento.DetalleCCSocio,System.Int32,System.Int32)">
+ <summary>
+ Carga un producto de socio según el detalle
+ </summary>
+ <param name="detalle">Detalle del producto</param>
+ <param name="socioID">ID del socio a guardar</param>
+ <param name="idMovimiento">ID del movimiento de CC que lo genera</param>
+ <returns></returns>
 </member>
 <member name="M:SocCam_Mantenimiento.MovimientoCuentaCorrienteSocio.CargarMovimientosImpagosSocios(System.Int32)">
  <summary>

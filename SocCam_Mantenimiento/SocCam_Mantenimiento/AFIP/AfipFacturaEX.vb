@@ -143,6 +143,14 @@ Public Class AfipFacturaEX
         End With
     End Function
 
+    Public Function Save() As Boolean
+        If Me.Id = 0 Then
+            Return Me.Save(0)
+        Else
+            Return Me.Save(1)
+        End If
+    End Function
+
 
     Public Function Save(ByVal editMode As Guardar) As Boolean
         Select Case editMode

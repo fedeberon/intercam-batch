@@ -11,9 +11,6 @@ Imports System.Security.Cryptography.X509Certificates
 Imports System.IO
 Imports System.Runtime.InteropServices
 
-
-
-
 Public Class AfipLogin
 
     Private Shared _globalId As UInt32 = 0

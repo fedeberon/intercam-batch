@@ -2,11 +2,9 @@
 
 Public Class CuotaSocio
 
-
+    Dim ConsoleOut As New ConsoleOut
     Public Property id As Integer = 0
-
     Public Property socioID As Integer = 0
-
     Public Property PlanID As Integer = 0
     Public Property Operacion As Integer = 0
 
@@ -175,82 +173,85 @@ Public Class CuotaSocio
     ''' <returns>El ultimo</returns>
     ''' <remarks></remarks>
     Public Function Save(ByVal sqle As SQLEngine, ByVal editMode As Byte) As Integer
-        Select Case editMode
-            Case 0
-                With sqle.Insert
-                    .Reset()
-                    .TableName = TABLA_PAGO_SOCIOS.TABLA_NOMBRE
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.SOCIO, socioID)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.ANIO, anio)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.PERIODO, Periodo)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.PERIODICIDAD, Periodicidad)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_VENCIMIENTO, fechaVencimiento)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.PLAN, PlanID)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.OBSERVACIONES, observaciones)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.ESTADO, estado)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.OPERACION, Operacion)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.BUSQUEDA_VENCIMIENTO, GetVencimientoSearchable(fechaVencimiento))
+        Try
+            Select Case editMode
+                Case 0
+                    With sqle.Insert
+                        .Reset()
+                        .TableName = TABLA_PAGO_SOCIOS.TABLA_NOMBRE
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.SOCIO, socioID)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.ANIO, anio)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.PERIODO, Periodo)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.PERIODICIDAD, Periodicidad)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_VENCIMIENTO, fechaVencimiento)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.PLAN, PlanID)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.OBSERVACIONES, observaciones)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.ESTADO, estado)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.OPERACION, Operacion)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.BUSQUEDA_VENCIMIENTO, GetVencimientoSearchable(fechaVencimiento))
 
-                    If estado = ESTADO_SOCIO.AL_DIA Then
-                        .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_PAGO, fechaPago)
-                        .AddColumnValue(TABLA_PAGO_SOCIOS.BUSQUEDA_PAGO, GetVencimientoSearchable(fechaPago))
-                    Else
-                        .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_PAGO, DBNull.Value)
-                    End If
+                        If estado = ESTADO_SOCIO.AL_DIA Then
+                            .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_PAGO, fechaPago)
+                            .AddColumnValue(TABLA_PAGO_SOCIOS.BUSQUEDA_PAGO, GetVencimientoSearchable(fechaPago))
+                        Else
+                            .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_PAGO, DBNull.Value)
+                        End If
 
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.COBRADOR, cobradorID)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.MODIFICADO, Now)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.DELETED, deleted)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.MONTO, monto)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.COBRADOR, cobradorID)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.MODIFICADO, Now)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.DELETED, deleted)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.MONTO, monto)
 
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.MOVIMIENTO_CC, MovimientoCC)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.MOVIMIENTO_CC, MovimientoCC)
 
-                    Dim newIndex As Integer
+                        Dim newIndex As Integer
 
-                    If .Insert(newIndex) Then
-                        Me.id = newIndex
-                        Return newIndex     ' Si guardo bien retornar el ultimo ID
-                    Else
-                        Return 0           ' Si no, retornar flag de error
-                    End If
-                End With
-            Case 1
-                With sqle.Update
-                    .Reset()
-                    .TableName = TABLA_PAGO_SOCIOS.TABLA_NOMBRE
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.SOCIO, socioID)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.ANIO, anio)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.PERIODO, Periodo)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.PERIODICIDAD, Periodicidad)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_VENCIMIENTO, fechaVencimiento)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.PLAN, PlanID)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.OBSERVACIONES, observaciones)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.ESTADO, estado)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.OPERACION, Operacion)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.BUSQUEDA_VENCIMIENTO, GetVencimientoSearchable(fechaVencimiento))
+                        If .Insert(newIndex) Then
+                            Me.id = newIndex
+                            Return newIndex     ' Si guardo bien retornar el ultimo ID
+                        Else
+                            Return 0           ' Si no, retornar flag de error
+                        End If
+                    End With
+                Case 1
+                    With sqle.Update
+                        .Reset()
+                        .TableName = TABLA_PAGO_SOCIOS.TABLA_NOMBRE
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.SOCIO, socioID)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.ANIO, anio)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.PERIODO, Periodo)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.PERIODICIDAD, Periodicidad)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_VENCIMIENTO, fechaVencimiento)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.PLAN, PlanID)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.OBSERVACIONES, observaciones)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.ESTADO, estado)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.OPERACION, Operacion)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.BUSQUEDA_VENCIMIENTO, GetVencimientoSearchable(fechaVencimiento))
 
-                    If estado = ESTADO_SOCIO.AL_DIA Then
-                        .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_PAGO, fechaPago)
-                        .AddColumnValue(TABLA_PAGO_SOCIOS.BUSQUEDA_PAGO, GetVencimientoSearchable(fechaPago))
-                    Else
-                        .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_PAGO, DBNull.Value)
-                    End If
+                        If estado = ESTADO_SOCIO.AL_DIA Then
+                            .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_PAGO, fechaPago)
+                            .AddColumnValue(TABLA_PAGO_SOCIOS.BUSQUEDA_PAGO, GetVencimientoSearchable(fechaPago))
+                        Else
+                            .AddColumnValue(TABLA_PAGO_SOCIOS.FECHA_PAGO, DBNull.Value)
+                        End If
 
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.COBRADOR, cobradorID)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.MODIFICADO, Now)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.DELETED, deleted)
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.MONTO, monto)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.COBRADOR, cobradorID)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.MODIFICADO, Now)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.DELETED, deleted)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.MONTO, monto)
+                        .AddColumnValue(TABLA_PAGO_SOCIOS.MOVIMIENTO_CC, MovimientoCC)
 
-                    .AddColumnValue(TABLA_PAGO_SOCIOS.MOVIMIENTO_CC, MovimientoCC)
+                        .WHEREstring = TABLA_PAGO_SOCIOS.ID & " = ?"
+                        .AddWHEREparam(id)
 
-                    .WHEREstring = TABLA_PAGO_SOCIOS.ID & " = ?"
-                    .AddWHEREparam(id)
-
-                    If .Update() Then Return id Else Return 0
-                End With
-            Case Else
-                Return 0
-        End Select
+                        If .Update() Then Return id Else Return 0
+                    End With
+                Case Else
+                    Return 0
+            End Select
+        Catch ex As Exception
+            ConsoleOut.Print("Error al guardar la cuota: " & ex.Message)
+        End Try
     End Function
 
     ''' <summary>
