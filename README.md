@@ -25,6 +25,16 @@ _En el archivo "intercam/intercam/soccam/Helpers/ConfigDatabase.vb" setear la va
 ### Ejecutar el proyecto.
 _El codigo se ejecuta desde el script "crear_cuotas_sociales.vbs". Por ende, desde CMD dirigirse a la ubicaicon de este archivo en "SocCamMantenimiento\SocCam_Mantenimiento\SocCam_Mantenimiento\bin\Release" y escribir el nombre del script para ejecutarlo. Este cargar las cuotas con los movimientos y facturas para socio. Excluye a los que tienen caja de seguridad.
 
+### Posibles problemas.
+_Si al ejecutar el comando "git add ." en nuestro projecto Visual Basic en Visual Studio arroja el error:_
+```
+"fatal: LF would be replaced by CRLF in SocCam_Mantenimiento/SocCam_Mantenimiento/bin/Release/SocCam_Mantenimiento.exe.manifest"
+```
+1. Guardar los cambios en Visual Studio y cerrar el IDE.
+2. Ejecutar el comando: "git config core.autocrlf false"
+3. Ahora ya deberiamos poder ejecutar "git add ."
+
+
 ## Colaboradores 👥
 
 * **Camila Levato** - [CamilaLev07](https://github.com/CamilaLev07)

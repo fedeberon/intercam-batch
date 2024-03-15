@@ -243,7 +243,6 @@ Public Class Executor
 
                 Dim fechaAprobacion As DateTime = dtrSocios(TABLA_SOCIO.FECHA_APROBACION)
 
-
                 If omitirUsuariosCofres Then
                     Dim tieneCofre As Boolean = False
 
@@ -277,10 +276,9 @@ Public Class Executor
                 Dim c As New CuotaSocio
                 c.sqle = SqleGlobal
 
-                Dim periodo As Integer = GetPeriodoFromFecha(mes, plan.getMesesPorPeriodo)
+                Dim periodo As Integer = GetPeriodoFromFecha((mes - 1), plan.getMesesPorPeriodo)
 
                 If Not c.CuotaExist(SqleGlobal, periodo, plan.periodicidad, anio, dtrSocios(TABLA_SOCIO.ID)) Then
-
 
                     If (fechaAprobacion.Year > anio) Then
                         ConsoleOut.Print($"Socio dado de alta posterior al año {anio}.")
@@ -346,7 +344,6 @@ Public Class Executor
 
                     mov.Save(MovimientoCuentaCorrienteSocio.Guardar.NUEVO)
                     'Movimiento end ---------------------------------------------------------------------------
-
 
                     'Else
                     '    Debug.Print($"{currSocio.Apellido} {currSocio.Nombre}")
@@ -809,7 +806,7 @@ Public Class Executor
                                        ByVal gc As GlobalConfig,
                                        ByVal periodoDesde As Date,
                                        ByVal periodoHasta As Date,
-                                        ByVal mes As Integer,
+                                       ByVal mes As Integer,
                                        ByVal anio As Integer,
                                        Optional localidades As Localidad = Nothing,
                                        Optional ByRef numeroComprobante As Integer = 0,
@@ -850,9 +847,11 @@ Public Class Executor
         End If
 
         Dim fechaEmision As Date = New Date(anio, mes, 1)
-        fact.FechaEmision = Utils.DateTo8601(Now.Date)
-        fact.FechaServicioDesde = Utils.DateTo8601(periodoDesde)
+        fact.FechaEmision = Utils.DateTo8601(fechaEmision)
+        fact.FechaServicioDesde = Utils.DateTo8601(fechaEmision)
+
         fact.FechaServicioHasta = Utils.DateTo8601(periodoHasta)
+
         Dim venc As New Date(anio, mes, 10)
         fact.FechaVencimiento = Utils.DateTo8601(venc)
         fact.FechaVencimientoPago = Utils.DateTo8601(venc)
