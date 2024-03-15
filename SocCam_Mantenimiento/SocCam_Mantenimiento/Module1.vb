@@ -91,7 +91,7 @@ Module Module1
                 'Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE, argParse.SW_SENDMAIL)
 
                 'DB Local: no enviar mail.
-                Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE)
+                Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE)
             End If
         End If
     End Function
