@@ -241,6 +241,9 @@ Public Class Executor
                 '    Debug.Print($"{ConsoleOut.ProgressBarStep} {currentProcess}/{totalSocios} - {currSocio.Nombre.Trim.PadRight(80, " ")}")
                 'End If
 
+                Dim fechaAprobacion As DateTime = dtrSocios(TABLA_SOCIO.FECHA_APROBACION)
+
+
                 If omitirUsuariosCofres Then
                     Dim tieneCofre As Boolean = False
 
@@ -261,6 +264,7 @@ Public Class Executor
 
                     If tieneCofre Then
                         ConsoleOut.Print($"Tiene cofre. Continua al siguiente socio.")
+                        ConsoleOut.Print($" ")
                         currentProcess += 1
                         Continue While
                     End If
@@ -277,10 +281,13 @@ Public Class Executor
 
                 If Not c.CuotaExist(SqleGlobal, periodo, plan.periodicidad, anio, dtrSocios(TABLA_SOCIO.ID)) Then
 
-                    If ((currSocio.FechaAceptacion.Month - 1) = periodo) And (currSocio.FechaAceptacion.Year = anio) Then
-                        If currSocio.FechaAceptacion.Day <= 10 Then
-                            Continue While
-                        End If
+
+                    If (fechaAprobacion.Year > anio) Then
+                        ConsoleOut.Print($"Socio dado de alta posterior al año {anio}.")
+                        Continue While
+                    ElseIf (fechaAprobacion.Year = anio) And ((fechaAprobacion.Month - 1) >= periodo) Then
+                        ConsoleOut.Print($"Socio dado de alta posterior al mes {periodo + 1} del año {anio}.")
+                        Continue While
                     End If
 
                     c.anio = anio
@@ -316,7 +323,7 @@ Public Class Executor
                     Localidades.LoadAll()
 
                     Dim numeroComprobante As Integer = 0
-                    Dim idComprobante As Integer = GenerarComprobante(AfipFactura.Tipo.RECIBO, c.socioID, lstDetalles, globalConfig, desde, hasta, Localidades, numeroComprobante)
+                    Dim idComprobante As Integer = GenerarComprobante(AfipFactura.Tipo.RECIBO, c.socioID, lstDetalles, globalConfig, desde, hasta, mes, anio, Localidades, numeroComprobante)
 
                     If idComprobante <= 0 Then
                         Utils.Scream("No se pudo guardar el comprobante. Vuelva a intentar.")
@@ -328,11 +335,11 @@ Public Class Executor
 
                     'Movimiento -------------------------------------------------------------------------------
                     Dim mov As New MovimientoCuentaCorrienteSocio(SqleGlobal)
-
+                    Dim fechaIngreso As Date = New Date(anio, mes, 1)
                     mov.ClienteId = c.socioID
                     mov.ComprobanteRelacionado = idComprobante
                     mov.ComprobanteTipo = MovimientoCuentaCorrienteSocio.TIPO.RECIBO_X
-                    mov.FechaIngreso = Utils.DateTo8601(Now.Date)
+                    mov.FechaIngreso = Utils.DateTo8601(fechaIngreso)
                     mov.Importe = c.monto * -1
                     mov.ImporteCobrar = mov.Importe
                     mov.CuotasSociales.Add(c)
@@ -802,6 +809,8 @@ Public Class Executor
                                        ByVal gc As GlobalConfig,
                                        ByVal periodoDesde As Date,
                                        ByVal periodoHasta As Date,
+                                        ByVal mes As Integer,
+                                       ByVal anio As Integer,
                                        Optional localidades As Localidad = Nothing,
                                        Optional ByRef numeroComprobante As Integer = 0,
                                        Optional ByRef comprobanteRelacionado As AfipFactura = Nothing) As Integer
@@ -840,27 +849,19 @@ Public Class Executor
             End If
         End If
 
+        Dim fechaEmision As Date = New Date(anio, mes, 1)
         fact.FechaEmision = Utils.DateTo8601(Now.Date)
         fact.FechaServicioDesde = Utils.DateTo8601(periodoDesde)
         fact.FechaServicioHasta = Utils.DateTo8601(periodoHasta)
-        fact.FechaVencimiento = Utils.DateTo8601(Now.Date.AddDays(1))
-
-        Dim fechaActual As Date = Now.Date
-
-        ' Establecer la fecha de vencimiento al día 10 del mes actual
-        Dim fechaVencimiento As Date = New Date(fechaActual.Year, fechaActual.Month, 10)
-
-        ' Convertir la fecha de vencimiento al formato deseado (si es necesario)
-        fact.FechaVencimientoPago = Utils.DateTo8601(fechaVencimiento)
+        Dim venc As New Date(anio, mes, 10)
+        fact.FechaVencimiento = Utils.DateTo8601(venc)
+        fact.FechaVencimientoPago = Utils.DateTo8601(venc)
 
         If Not fact.Save(AfipFactura.Guardar.NUEVO) Then Return -4
-
 
         Dim fx As New AfipFacturaEX(SqleGlobal)
         fx.FacturaId = fact.Id
         fx.CondicionContado = True
-
-        'fx.CondicionFiscalStringReceptor = GetCondicionFiscalString(socio.CondicionFiscal)
 
         If Not IsNumeric(socio.Cuit) Then
             fx.CondicionFiscalStringReceptor = "Consumidor Final"
