@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>SZHzJZAdrZaBO5rWbyCJ+GSzXo9CwmpSo0IrNYjj8y4=</dsig:DigestValue>
+        <dsig:DigestValue>GkMo/tGO7ErJ+9moE5E0SJDAFUei4lZ1QaILRgmb9V4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,17 +97,17 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>BW5MlZppsdUULyI1D+z30MPG2xDAaBsOaSSAhcGegHQ=</dsig:DigestValue>
+        <dsig:DigestValue>fsr0nAt7S2VI3sQ0Hdia+9uqGVotVOkHtu528Wp45dE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="SocCam_Mantenimiento.exe.config" size="1383">
+  <file name="SocCam_Mantenimiento.exe.config" size="1407">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>fickYAG/NrYbr354q5D+MAH/MRj5HYmmVioo81OQgD8=</dsig:DigestValue>
+      <dsig:DigestValue>PmB8kiod3KaC9y3R8M+tkABF6NREVceIh1PjANVz1JI=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
