@@ -1,0 +1,4 @@
+C:\Users\Ema\Desktop\soccam\SocCamMantenimiento\SocCam_Mantenimiento\SOCCAM_MANTENIMIENTO_TESTS\obj\Release\SOCCAM_MANTENIMIENTO_TESTS.vbproj.AssemblyReference.cache
+C:\Users\Ema\Desktop\soccam\SocCamMantenimiento\SocCam_Mantenimiento\SOCCAM_MANTENIMIENTO_TESTS\obj\Release\SOCCAM_MANTENIMIENTO_TESTS.Resources.resources
+C:\Users\Ema\Desktop\soccam\SocCamMantenimiento\SocCam_Mantenimiento\SOCCAM_MANTENIMIENTO_TESTS\obj\Release\SOCCAM_MANTENIMIENTO_TESTS.vbproj.GenerateResource.cache
+C:\Users\Ema\Desktop\soccam\SocCamMantenimiento\SocCam_Mantenimiento\SOCCAM_MANTENIMIENTO_TESTS\obj\Release\SOCCAM_MANTENIMIENTO_TESTS.vbproj.CoreCompileInputs.cache

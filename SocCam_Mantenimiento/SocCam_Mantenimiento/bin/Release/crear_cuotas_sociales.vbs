@@ -6,7 +6,7 @@ Dim Anio
 Anio = DatePart("yyyy", Date)
 
 Dim Com
-Com = "SocCam_Mantenimiento.exe --crear-cuotas-sociales ccb produccion p" & Mes & " a" & Anio & " --log C:\Users\Ema\Desktop"
+Com = "SocCam_Mantenimiento.exe --crear-cuotas-sociales ccb produccion p" & 2 & " a" & 2023 & " --log C:\Users\Ema\Desktop"
 
 ' Registro: Mostrar el valor de la variable Com
 Set objFSO = CreateObject("Scripting.FileSystemObject")

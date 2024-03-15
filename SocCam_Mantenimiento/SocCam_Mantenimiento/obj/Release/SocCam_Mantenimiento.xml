@@ -212,7 +212,7 @@ SocCam_Mantenimiento
  </param>
  <returns></returns>
 </member>
-<member name="M:SocCam_Mantenimiento.Executor.GenerarComprobante(SocCam_Mantenimiento.AfipFactura.Tipo,System.Int32,System.Collections.Generic.List{SocCam_Mantenimiento.AfipFacturaDetalle},SocCam_Mantenimiento.GlobalConfig,System.DateTime,System.DateTime,SocCam_Mantenimiento.Localidad,System.Int32@,SocCam_Mantenimiento.AfipFactura@)">
+<member name="M:SocCam_Mantenimiento.Executor.GenerarComprobante(SocCam_Mantenimiento.AfipFactura.Tipo,System.Int32,System.Collections.Generic.List{SocCam_Mantenimiento.AfipFacturaDetalle},SocCam_Mantenimiento.GlobalConfig,System.DateTime,System.DateTime,System.Int32,System.Int32,SocCam_Mantenimiento.Localidad,System.Int32@,SocCam_Mantenimiento.AfipFactura@)">
  <summary>
  Generar un comprobante por los detalles del movimiento
  </summary>

@@ -82,16 +82,16 @@ Module Module1
 
         If argParse.SW_CREAR_CUOTAS_SOCIALES Then
             If argParse.SW_NO_FACTURAR Then
-                'No genera el movimiento ni la factura.
+                'No genera el movimiento ni la factura. NO SE USA MAS.
                 Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_MES_VENCIDO, argParse.SW_CUOTA_AUTOCOBRAR, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE)
             Else
                 'Se genera cuota, recibo y movimiento. No se factura.
 
-                'Camara: envia mail.
+                'Camara: envia mail. NO ES MAS NECESARIO. Solo se enviaban cuando se generaban las facturas antes. Ahora solo se genera recibo.
                 'Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE, argParse.SW_SENDMAIL)
 
                 'DB Local: no enviar mail.
-                Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL - 1, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE)
+                Return ejecutor.GenerarCuotasSocios(argParse.PARAM_PERIODO_CUOTA_SOCIAL, argParse.PARAM_ANIO_CUOTA_SOCIAL, argParse.SW_CUOTA_OMITIR_SOCIOS_COFRE)
             End If
         End If
     End Function

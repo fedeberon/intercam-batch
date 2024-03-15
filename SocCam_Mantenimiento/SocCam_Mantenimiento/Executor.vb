@@ -1,5 +1,7 @@
-﻿Imports System.IO
+﻿Imports System.Globalization
+Imports System.IO
 Imports System.IO.Compression
+Imports System.Runtime.InteropServices.ComTypes
 Imports System.Windows.Documents
 Imports System.Windows.Shapes
 Imports helix
@@ -203,12 +205,10 @@ Public Class Executor
             Return False
         End If
 
-
         globalConfig.Sqle = SqleGlobal
         If Not globalConfig.LoadMe(1) Then
             ConsoleOut.Print("No se pudo cargar la configuraicon global")
         End If
-
 
         ' Buscar todos los socios activos
         If socios.LoadAll(SqleGlobal, dtSocios, True) Then
@@ -227,13 +227,15 @@ Public Class Executor
             Dim primerDiaDelProximoMes As DateTime = New DateTime(hoy.Year, hoy.Month, 1).AddMonths(1)
             Dim ultimoDiaDelMesActual As DateTime = primerDiaDelProximoMes.AddDays(-1)
             Dim hasta As DateTime = ultimoDiaDelMesActual
-            ConsoleOut.Print($"hasta: {hasta}")
+
 
             ConsoleOut.Print($"Iterando Socios.")
             While dtrSocios.Read
                 Dim currSocio As New Socio
                 currSocio.LoadMe(SqleGlobal, dtrSocios(TABLA_SOCIO.ID))
                 ConsoleOut.Print($"Socio encontrado: {dtrSocios(TABLA_SOCIO.ID)}")
+
+                Dim fechaAprobacion As DateTime = dtrSocios(TABLA_SOCIO.FECHA_APROBACION)
 
                 'If Not Silent Then
                 '    ConsoleOut.UpdateLastLine($"{ConsoleOut.ProgressBarStep} {currentProcess}/{totalSocios} - {currSocio.Nombre.Trim.PadRight(80, " ")}")
@@ -249,7 +251,7 @@ Public Class Executor
 
                     If contratoCofre.SearchResult.Count > 0 Then
                         For Each contrato As ContratoCofre In contratoCofre.SearchResult
-
+                            ConsoleOut.Print("cofres")
                             'El If se ejecutará si y solo si contrato.Deleted = False.
                             If Not contrato.Deleted Then
                                 tieneCofre = True
@@ -261,33 +263,49 @@ Public Class Executor
 
                     If tieneCofre Then
                         ConsoleOut.Print($"Tiene cofre. Continua al siguiente socio.")
+                        ConsoleOut.Print($" ")
                         currentProcess += 1
                         Continue While
                     End If
                 End If
 
+
                 Dim plan As New SocioTipo
                 plan.sqle = SqleGlobal
                 plan.LoadMe(dtrSocios(TABLA_SOCIO.TIPO_SOCIO))
 
+
                 Dim c As New CuotaSocio
                 c.sqle = SqleGlobal
 
-                Dim periodo As Integer = GetPeriodoFromFecha(mes, plan.getMesesPorPeriodo)
+                Dim periodo As Integer = GetPeriodoFromFecha((mes - 1), plan.getMesesPorPeriodo)
+
 
                 If Not c.CuotaExist(SqleGlobal, periodo, plan.periodicidad, anio, dtrSocios(TABLA_SOCIO.ID)) Then
 
-                    If ((currSocio.FechaAceptacion.Month - 1) = periodo) And (currSocio.FechaAceptacion.Year = anio) Then
-                        If currSocio.FechaAceptacion.Day <= 10 Then
-                            Continue While
-                        End If
+                    If (fechaAprobacion.Year > anio) Then
+                        ConsoleOut.Print($"Dado de alta posterior al año: {anio}")
+                        Continue While
+                    ElseIf (fechaAprobacion.Year = anio) And ((fechaAprobacion.Month - 1) >= periodo) Then
+                        ConsoleOut.Print($"Dado de alta posterior al mes: {periodo + 1} del {anio}")
+                        Continue While
                     End If
+
+                    'A cobrar -> enero 2022 || socio dato alta -> marzo 2022 SE LE COBRA
+                    'A cobrar -> marzo 2022 || socio dato alta -> enero 2022 NO SE LE COBRA
+
+                    'A cobrar -> 2022 || socio dato alta -> 2023 NO SE LE COBRA
+                    'A cobrar -> 2022 || socio dato alta -> 2021 SE LE COBRA
+
 
                     c.anio = anio
                     c.Periodo = periodo
                     c.Periodicidad = plan.periodicidad
                     c.PlanID = plan.id
-                    c.monto = plan.importe
+
+                    'IMPORTANTE: Cambiar segun el mes a cobrar
+                    c.monto = 1700.0
+
                     c.cobradorID = 1
                     c.estado = CuotaSocio.ESTADO_SOCIO.PENDIENTE
                     c.socioID = dtrSocios(TABLA_SOCIO.ID)
@@ -299,10 +317,13 @@ Public Class Executor
                     End If
 
                     'Recibo -----------------------------------------------------------------------------------
+
+                    ' periodo = (-1 al mes actual) 0 = enero || 1 = febrero || etc
+                    Dim descripcion = $"Cuota social {Utils.GetNombreMes(periodo)} {anio}"
+
                     Dim lstDetalles As New List(Of AfipFacturaDetalle)
                     Dim detalle As New AfipFacturaDetalle()
 
-                    Dim descripcion = $"Cuota social {Utils.GetNombreMes(periodo)} {Now.Year}"
                     detalle.ProductoServicio = $"{descripcion}: <b>{Utils.ToMoneyFormat(c.monto)}</b>"
                     detalle.Cantidad = 1
                     detalle.UnidadMedida = AfipFacturaDetalle.Unidad.OTRAS_UNIDADES
@@ -311,28 +332,31 @@ Public Class Executor
 
                     lstDetalles.Add(detalle)
 
+
                     Dim Localidades As New Localidad
                     Localidades.sqle = SqleGlobal
                     Localidades.LoadAll()
 
                     Dim numeroComprobante As Integer = 0
-                    Dim idComprobante As Integer = GenerarComprobante(AfipFactura.Tipo.RECIBO, c.socioID, lstDetalles, globalConfig, desde, hasta, Localidades, numeroComprobante)
+                    Dim idComprobante As Integer = GenerarComprobante(AfipFactura.Tipo.RECIBO, c.socioID, lstDetalles, globalConfig, desde, hasta, mes, anio, Localidades, numeroComprobante)
 
                     If idComprobante <= 0 Then
                         Utils.Scream("No se pudo guardar el comprobante. Vuelva a intentar.")
                     End If
                     'Recibo end -------------------------------------------------------------------------------
 
+
                     c.observaciones = $"RX-{numeroComprobante}"
                     c.Save(SqleGlobal, 0)
 
                     'Movimiento -------------------------------------------------------------------------------
                     Dim mov As New MovimientoCuentaCorrienteSocio(SqleGlobal)
+                    Dim fechaIngreso As Date = New Date(anio, mes, 1) ' periodo = (-1 al mes actual) 0 = enero || 1 = febrero || etc
 
                     mov.ClienteId = c.socioID
                     mov.ComprobanteRelacionado = idComprobante
                     mov.ComprobanteTipo = MovimientoCuentaCorrienteSocio.TIPO.RECIBO_X
-                    mov.FechaIngreso = Utils.DateTo8601(Now.Date)
+                    mov.FechaIngreso = Utils.DateTo8601(fechaIngreso)
                     mov.Importe = c.monto * -1
                     mov.ImporteCobrar = mov.Importe
                     mov.CuotasSociales.Add(c)
@@ -347,9 +371,12 @@ Public Class Executor
                     '    c.Delete(sCuota, c.id)
                     'End If
 
+                Else
+                    ConsoleOut.Print($"El socio{dtrSocios(TABLA_SOCIO.ID)} tiene la cuota ya generada para el correspondiente mes.")
+
                 End If
                 currentProcess += 1
-                ConsoleOut.Print(" ")
+
             End While
 
             If Not Silent Then
@@ -802,6 +829,8 @@ Public Class Executor
                                        ByVal gc As GlobalConfig,
                                        ByVal periodoDesde As Date,
                                        ByVal periodoHasta As Date,
+                                       ByVal mes As Integer,
+                                       ByVal anio As Integer,
                                        Optional localidades As Localidad = Nothing,
                                        Optional ByRef numeroComprobante As Integer = 0,
                                        Optional ByRef comprobanteRelacionado As AfipFactura = Nothing) As Integer
@@ -840,27 +869,31 @@ Public Class Executor
             End If
         End If
 
-        fact.FechaEmision = Utils.DateTo8601(Now.Date)
-        fact.FechaServicioDesde = Utils.DateTo8601(periodoDesde)
-        fact.FechaServicioHasta = Utils.DateTo8601(periodoHasta)
-        fact.FechaVencimiento = Utils.DateTo8601(Now.Date.AddDays(1))
+        ' ----------------------------------------------------------------------------
+        'Fecha de Emisión
+        Dim fecha As New Date(anio, mes, 1)
+        Dim fechaEmisionString As String = fecha.ToString("yyyyMMdd")
+        fact.FechaEmision = fechaEmisionString
 
-        Dim fechaActual As Date = Now.Date
+        'Período Facturado Desde
+        Dim valor8601 As Integer = Utils.DateTo8601(fecha)
+        fact.FechaServicioDesde = valor8601 '
 
-        ' Establecer la fecha de vencimiento al día 10 del mes actual
-        Dim fechaVencimiento As Date = New Date(fechaActual.Year, fechaActual.Month, 10)
+        'IMPORTANTE: CAMBIA SEGUN ULTIMO DIA DEL MES
+        Dim hasta As New Date(anio, mes, 29)  'mes 12 a generar
+        fact.FechaServicioHasta = Utils.DateTo8601(hasta)
 
-        ' Convertir la fecha de vencimiento al formato deseado (si es necesario)
-        fact.FechaVencimientoPago = Utils.DateTo8601(fechaVencimiento)
+        'Fecha de Vto. para el pago
+        Dim venc As New Date(anio, mes, 10)
+        fact.FechaVencimiento = Utils.DateTo8601(venc)
+        fact.FechaVencimientoPago = Utils.DateTo8601(venc)
+        ' ---------------------------------------------------------------------------------
 
         If Not fact.Save(AfipFactura.Guardar.NUEVO) Then Return -4
-
 
         Dim fx As New AfipFacturaEX(SqleGlobal)
         fx.FacturaId = fact.Id
         fx.CondicionContado = True
-
-        'fx.CondicionFiscalStringReceptor = GetCondicionFiscalString(socio.CondicionFiscal)
 
         If Not IsNumeric(socio.Cuit) Then
             fx.CondicionFiscalStringReceptor = "Consumidor Final"
