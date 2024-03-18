@@ -273,6 +273,13 @@ Public Class Executor
                 plan.sqle = SqleGlobal
                 plan.LoadMe(dtrSocios(TABLA_SOCIO.TIPO_SOCIO))
 
+                ConsoleOut.Print($"Socio tipo: {dtrSocios(TABLA_SOCIO.TIPO_SOCIO)}")
+                'Si el socio es socio honorario, no se le carga cuota.
+                If (dtrSocios(TABLA_SOCIO.TIPO_SOCIO) = 20003) Then
+                    ConsoleOut.Print($"Socio tipo Honorario. Continua el While.")
+                    Continue While
+                End If
+
                 Dim c As New CuotaSocio
                 c.sqle = SqleGlobal
 
