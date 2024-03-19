@@ -34,6 +34,9 @@ _Si al ejecutar el comando "git add ." en nuestro projecto Visual Basic en Visua
 2. Ejecutar el comando: "git config core.autocrlf false"
 3. Ahora ya deberiamos poder ejecutar "git add ."
 
+### Advertencia.
+_La branch "generarCuotasPreviasFechaActual" no debe eliminarse ya que contiene el código para generar recibos previos en el sistema de soccam hasta la fecha actual. Originalmente, el sistema no tenía una función para generar recibos previos, ya que estaba diseñado para crearlos en la fecha de ejecución. Esta rama se creó para evitar la necesidad de modificar el código nuevamente en el futuro si se requieren recibos previos en algún momento._
+_Para generar recibos previos desde la branch especificada se debe modificar el script "crear_cuotas_sociales.vbs", en "intercam-batch/SocCam_Mantenimiento/SocCam_Mantenimiento/bin/{debug or release}/", y donde se setean las variables de "mes" y "anio", colocar los valores deseados. Luego en el propio codigo, en el archivo "Executor.vb" en "intercam-batch/SocCam_Mantenimiento/SocCam_Mantenimiento/", modificar la linea 307 "c.monto = 1700.0" con el valor correspondiente a la cuota a generar. No olvidarse de establecer el sistema en modo produccion o test, como se especifico mas arriba, acorde a las nesecidades._
 
 ## Colaboradores 👥
 
