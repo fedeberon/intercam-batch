@@ -1,4 +1,5 @@
-﻿Imports helix
+﻿Imports System.Data.SqlClient
+Imports helix
 
 Public Class CuotaSocio
 
@@ -249,6 +250,25 @@ Public Class CuotaSocio
                 Case Else
                     Return 0
             End Select
+        Catch ex As Exception
+            ConsoleOut.Print("Error al guardar la cuota: " & ex.Message)
+        End Try
+    End Function
+
+    Public Function Update(ByVal sqle As SQLEngine) As Integer
+        Try
+            Dim connectionString As String = "Server= " + My.Computer.Name & "\" & "SQLEXPRESS" + ";Database=" + "soccam" + ";User Id=" + "soccam_user" + ";Password=" + "1Aleonardo" + ";"
+            Dim query As String = "UPDATE " + TABLA_PAGO_SOCIOS.TABLA_NOMBRE + "
+    SET 
+    " + TABLA_PAGO_SOCIOS.MOVIMIENTO_CC + " = " + MovimientoCC.ToString + "
+    WHERE " + TABLA_PAGO_SOCIOS.ID + " = " + id.ToString + ";"
+            Using connection As New SqlConnection(connectionString)
+                Using command As New SqlCommand(query, connection)
+                    connection.Open()
+                    command.ExecuteReader()
+                    connection.Close()
+                End Using
+            End Using
         Catch ex As Exception
             ConsoleOut.Print("Error al guardar la cuota: " & ex.Message)
         End Try
